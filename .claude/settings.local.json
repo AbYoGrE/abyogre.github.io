@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(curl -sL https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css)",
-      "Bash(sed 's/class=\"\\\\\\([^\"]*\\\\\\)reveal\"/class=\"\\\\1reveal visible\"/; s/<section class=\"hero\"/<section class=\"hero\" style=\"display:none\"/' \"C:/Users/USUARIO/Downloads/Portfolio/index.html\")",
-      "Bash('/c/Program Files \\(x86\\)/Microsoft/Edge/Application/msedge.exe' --headless --disable-gpu --hide-scrollbars --virtual-time-budget=4000 --window-size=1600,1000 --screenshot=C:/Users/USUARIO/AppData/Local/Temp/claude/c--Users-USUARIO-Downloads-Portfolio/5eadfee9-fe3a-4bde-bbf1-7eadbfeba2e0/scratchpad/about.png file:///C:/Users/USUARIO/Downloads/Portfolio/_shot.html)"
-    ]
-  }
-}
