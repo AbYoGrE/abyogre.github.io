@@ -1,0 +1,3632 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abraham Román — Game Developer Portfolio 2026</title>
+    <meta name="description"
+        content="Portfolio de Abraham Román, desarrollador de videojuegos. System Programmer, UI/UX Designer, Gameplay Programmer y más.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <!-- Tech icons (Unity, C#, Git...) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/devicon.min.css">
+    <script>
+        // Hide the name before first paint so the intro can reveal it
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.documentElement.classList.add('intro');
+        }
+    </script>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #1a1a2e;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* ===== HERO SECTION (PORTADA) ===== */
+        .hero {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Fade transition to the next section */
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 45vh;
+            /* Eased stops so the fade starts softly instead of as a hard band */
+            background: linear-gradient(to bottom,
+                    rgba(15, 20, 40, 0) 0%,
+                    rgba(15, 20, 40, 0.06) 20%,
+                    rgba(15, 20, 40, 0.18) 38%,
+                    rgba(15, 20, 40, 0.38) 55%,
+                    rgba(15, 20, 40, 0.62) 72%,
+                    rgba(15, 20, 40, 0.85) 87%,
+                    #0f1428 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* --- Top Bar --- */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 40px;
+            background: rgba(15, 20, 40, 0.85);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .profile-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(180, 170, 220, 0.25);
+            border: 2px solid rgba(180, 170, 220, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-icon {
+            overflow: hidden;
+        }
+
+        .profile-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .portfolio-year {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: rgba(200, 210, 240, 0.85);
+            letter-spacing: 3px;
+            line-height: 1;
+        }
+
+        /* --- Section shortcuts: joined circles in the middle of the top bar --- */
+        .section-nav {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .section-nav ol {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-nav li {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Line joining each circle to the previous one */
+        .section-nav li + li::before {
+            content: '';
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: rgba(143, 233, 255, 0.35);
+        }
+
+        .nav-dot {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            background: rgba(15, 20, 40, 0.9);
+            border: 2px solid rgba(143, 233, 255, 0.45);
+            color: rgba(200, 225, 245, 0.8);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .nav-dot svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .nav-dot:hover,
+        .nav-dot:focus-visible {
+            border-color: #8fe9ff;
+            color: #8fe9ff;
+            box-shadow: 0 0 12px rgba(143, 233, 255, 0.5);
+            transform: translateY(-2px);
+            outline: none;
+        }
+
+        /* Section currently on screen */
+        .nav-dot.active {
+            background: #8fe9ff;
+            border-color: #8fe9ff;
+            color: #0f1428;
+            box-shadow: 0 0 14px rgba(143, 233, 255, 0.6);
+        }
+
+        /* Name of the section, shown under the circle on hover / focus */
+        .nav-dot::after {
+            content: attr(data-label);
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translate(-50%, -4px);
+            padding: 4px 10px;
+            background: rgba(10, 14, 30, 0.95);
+            border: 1px solid rgba(143, 233, 255, 0.45);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            color: #dce6f5;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease, transform 0.15s ease;
+        }
+
+        .nav-dot:hover::after,
+        .nav-dot:focus-visible::after {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        /* Anchors land below the fixed top bar */
+        #proyectos,
+        #contacto {
+            scroll-margin-top: 70px;
+        }
+
+        #mas-juegos {
+            scroll-margin-top: 110px;
+        }
+
+        @media (max-width: 700px) {
+            .section-nav {
+                position: static;
+                transform: none;
+            }
+
+            .section-nav li + li::before {
+                width: 8px;
+            }
+
+            .nav-dot {
+                width: 34px;
+                height: 34px;
+            }
+
+            .nav-dot svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            .nav-dot::after {
+                display: none;
+            }
+        }
+
+        /* Very narrow phones: the circles take the profile icon's place */
+        @media (max-width: 480px) {
+            .top-bar .profile-icon {
+                display: none;
+            }
+        }
+
+        /* --- Copy-to-clipboard notification --- */
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(10, 14, 30, 0.96);
+            border: 2px solid #8fe9ff;
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45), 0 0 18px rgba(143, 233, 255, 0.35);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #dce6f5;
+            opacity: 0;
+            transform: translate(-50%, 16px);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+
+        .toast svg {
+            width: 20px;
+            height: 20px;
+            fill: none;
+            stroke: #5ee7b5;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* --- Hero Background --- */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: #0f1428;
+            z-index: 0;
+        }
+
+        /* --- Hero Content --- */
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 20px;
+            /* Leaves room for the project previews strip */
+            padding-bottom: 150px;
+        }
+
+        .hero .start-btn {
+            margin-top: clamp(40px, 10vh, 90px);
+        }
+
+        @media (max-height: 760px) {
+            .hero-content {
+                padding-bottom: 120px;
+            }
+        }
+
+        .hero-title {
+            position: relative;
+        }
+
+        .hero-title-text {
+            position: relative;
+            isolation: isolate;
+            transition: opacity 0.9s ease-out, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        /* Intro: name hidden above its final position until the code finishes */
+        .intro .hero-title-text {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+
+        .intro.intro-done .hero-title-text {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* --- Intro code typing --- */
+        .hero-code {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0;
+            font-family: Consolas, 'Cascadia Code', 'Courier New', monospace;
+            font-size: clamp(1rem, 2.6vw, 2rem);
+            line-height: 1.6;
+            text-align: left;
+            white-space: pre;
+            color: #ffffff;
+            text-shadow: 0 1px 6px rgba(10, 20, 60, 0.35);
+            pointer-events: none;
+            transition: opacity 0.4s ease, filter 0.4s ease;
+        }
+
+        .hero-code.hide {
+            opacity: 0;
+            filter: blur(4px);
+        }
+
+        .hero-code .k {
+            color: #ffd479;
+        }
+
+        .hero-code .t {
+            color: #7ff0c8;
+        }
+
+        .hero-code .s {
+            color: #ffb8cf;
+        }
+
+        .hero-code .n {
+            color: #c9b8ff;
+        }
+
+        .hero-code .f {
+            color: #9fe1ff;
+        }
+
+        .hero-code .ok {
+            color: #7dffb0;
+            text-shadow: 0 0 12px rgba(125, 255, 176, 0.6);
+        }
+
+        .hero-code .cursor {
+            display: inline-block;
+            width: 0.55em;
+            height: 1.1em;
+            vertical-align: text-bottom;
+            background: #ffffff;
+            animation: cursorBlink 0.8s steps(1) infinite;
+        }
+
+        @keyframes cursorBlink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Soft light halo behind the name so the dark letters stand out */
+        .hero-title-text::before {
+            content: '';
+            position: absolute;
+            inset: -15% -20%;
+            z-index: -1;
+            background: radial-gradient(ellipse at center,
+                    rgba(200, 240, 255, 0.3) 0%,
+                    rgba(200, 240, 255, 0.12) 40%,
+                    rgba(200, 240, 255, 0) 70%);
+            filter: blur(30px);
+            pointer-events: none;
+        }
+
+        .hero-name {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: clamp(4rem, 11vw, 9.5rem);
+            font-weight: 700;
+            color: #0a0f1f;
+            line-height: 1;
+            letter-spacing: 6px;
+            /* Dark letters with the neon glow of "Sobre mí" around their edges */
+            text-shadow: 0 0 2px rgba(143, 233, 255, 0.95), 0 0 12px rgba(143, 233, 255, 0.7), 0 0 34px rgba(143, 233, 255, 0.45);
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
+
+        .hero-surname {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: clamp(1.8rem, 4.5vw, 3.6rem);
+            font-weight: 500;
+            font-style: normal;
+            color: #0a0f1f;
+            text-shadow: 0 0 2px rgba(143, 233, 255, 0.95), 0 0 10px rgba(143, 233, 255, 0.65), 0 0 26px rgba(143, 233, 255, 0.4);
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* --- Role Carousel --- */
+        /* Role selector: [stick] carousel [stick], like a game's character select */
+        .role-select {
+            margin-top: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            transition: opacity 0.9s ease-out 0.45s, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.45s;
+        }
+
+        /* Intro: selector waits off to the right until the name has entered */
+        .intro .role-select {
+            opacity: 0;
+            transform: translateX(20vw);
+            pointer-events: none;
+        }
+
+        .intro.intro-done .role-select {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .role-carousel {
+            width: 1200px;
+            max-width: calc(90vw - 180px);
+            position: relative;
+            height: 65px;
+            overflow: hidden;
+            /* Side roles fade out towards the sticks */
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+        }
+
+        /* --- Joystick buttons --- */
+        .stick-btn {
+            flex-shrink: 0;
+            width: 104px;
+            height: 80px;
+            padding: 0;
+            border: none;
+            background: none;
+            cursor: pointer;
+            filter: drop-shadow(0 0 8px rgba(143, 233, 255, 0.55));
+            transition: filter 0.2s ease, transform 0.2s ease;
+        }
+
+        .stick-btn svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .stick-btn.right svg {
+            transform: scaleX(-1);
+        }
+
+        .stick-base {
+            fill: rgba(10, 15, 31, 0.7);
+            stroke: #8fe9ff;
+            stroke-width: 3;
+        }
+
+        .stick-cap {
+            transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .stick-cap circle:first-child {
+            fill: #0a0f1f;
+            stroke: #8fe9ff;
+            stroke-width: 2.5;
+        }
+
+        .stick-cap circle:last-child {
+            fill: none;
+            stroke: rgba(143, 233, 255, 0.5);
+            stroke-width: 1.5;
+        }
+
+        .stick-arrow {
+            fill: #e8f7ff;
+            transition: transform 0.18s ease;
+        }
+
+        .stick-btn:hover {
+            filter: drop-shadow(0 0 14px rgba(143, 233, 255, 0.9));
+            transform: scale(1.06);
+        }
+
+        /* Tilt the stick towards its arrow on hover / when pushed */
+        .stick-btn:hover .stick-cap {
+            transform: translateX(-3px);
+        }
+
+        .stick-btn.pushed .stick-cap {
+            transform: translateX(-9px);
+        }
+
+        .stick-btn.pushed .stick-arrow {
+            transform: translateX(-3px);
+        }
+
+        .stick-btn:focus-visible {
+            outline: 2px solid #8fe9ff;
+            outline-offset: 4px;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 700px) {
+            .role-select {
+                gap: 6px;
+            }
+
+            .role-carousel {
+                max-width: calc(96vw - 124px);
+                -webkit-mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+                mask-image: linear-gradient(to right, transparent, #000 5%, #000 95%, transparent);
+            }
+
+            .stick-btn {
+                width: 58px;
+                height: 46px;
+            }
+        }
+
+        .role-track {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            left: 50%;
+            top: 0;
+            height: 100%;
+            will-change: transform;
+        }
+
+        .role-track.animating {
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .role-item {
+            font-family: 'Chakra Petch', sans-serif;
+            flex-shrink: 0;
+            width: var(--item-w, 450px);
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            font-style: normal;
+            color: rgba(232, 247, 255, 0.4);
+            text-shadow: 0 0 10px rgba(143, 233, 255, 0.25);
+            transition: font-size 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                color 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                text-shadow 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            white-space: nowrap;
+            user-select: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .role-item.active {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #e8f7ff;
+            text-shadow: 0 0 6px rgba(143, 233, 255, 0.8), 0 0 22px rgba(143, 233, 255, 0.45);
+        }
+
+        /* Phones: one role at a time, text sized to fit */
+        @media (max-width: 700px) {
+            .role-item {
+                font-size: 1.1rem;
+            }
+
+            .role-item.active {
+                font-size: clamp(1.1rem, 5.4vw, 1.35rem);
+            }
+
+            .top-bar {
+                padding: 12px 18px;
+            }
+
+            .portfolio-year {
+                font-size: 1.15rem;
+                letter-spacing: 2px;
+                white-space: nowrap;
+            }
+        }
+
+        /* --- START / NEXT Button ---
+           Retro HUD window (same notched pixel border as the portfolio windows)
+           with a blinking arcade-menu cursor; fills with cyan on hover. */
+        .start-btn {
+            --px: 3px;
+            --bc: #8fe9ff;
+            --btn-border:
+                0 calc(-1 * var(--px)) 0 0 var(--bc),
+                0 var(--px) 0 0 var(--bc),
+                calc(-1 * var(--px)) 0 0 0 var(--bc),
+                var(--px) 0 0 0 var(--bc),
+                0 calc(-3 * var(--px)) 0 calc(-1 * var(--px)) var(--bc),
+                0 calc(3 * var(--px)) 0 calc(-1 * var(--px)) var(--bc),
+                calc(-3 * var(--px)) 0 0 calc(-1 * var(--px)) var(--bc),
+                calc(3 * var(--px)) 0 0 calc(-1 * var(--px)) var(--bc);
+            --btn-bevel: inset 3px 3px 0 rgba(255, 255, 255, 0.08), inset -3px -3px 0 rgba(0, 0, 0, 0.35);
+            position: relative;
+            margin-top: 160px;
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
+            padding: 20px 48px 20px 38px;
+            /* Faint scanlines over a dark panel */
+            background:
+                repeating-linear-gradient(0deg, rgba(143, 233, 255, 0.05) 0 1px, transparent 1px 3px),
+                rgba(10, 15, 31, 0.8);
+            border: none;
+            border-radius: 0;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.15rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #8fe9ff;
+            text-shadow: 0 0 8px rgba(143, 233, 255, 0.6);
+            cursor: pointer;
+            box-shadow: var(--btn-bevel), var(--btn-border), 8px 8px 0 0 rgba(0, 0, 0, 0.45);
+            transition: background 0.15s ease, color 0.15s ease, transform 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        /* Arcade menu cursor */
+        .start-btn::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-left: 11px solid currentColor;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            filter: drop-shadow(0 0 4px currentColor);
+            animation: cursorBlink 1s steps(1) infinite;
+            transition: transform 0.15s ease;
+        }
+
+        /* Soft pulsing halo around the window */
+        .start-btn::after {
+            content: '';
+            position: absolute;
+            inset: -9px;
+            box-shadow: 0 0 22px rgba(143, 233, 255, 0.35);
+            animation: glowPulse 2.5s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        .start-btn:hover {
+            background: #8fe9ff;
+            color: #0a0f1f;
+            text-shadow: none;
+            box-shadow: var(--btn-bevel), var(--btn-border), 8px 8px 0 0 rgba(0, 0, 0, 0.45),
+                0 0 26px rgba(143, 233, 255, 0.55);
+        }
+
+        .start-btn:hover::before {
+            animation: none;
+            transform: translateX(4px);
+            filter: none;
+        }
+
+        /* Pressed: the window sinks onto its hard shadow */
+        .start-btn:active {
+            transform: translate(5px, 5px);
+            box-shadow: var(--btn-bevel), var(--btn-border), 3px 3px 0 0 rgba(0, 0, 0, 0.45);
+        }
+
+        .start-btn:focus-visible {
+            outline: 2px dashed #ffffff;
+            outline-offset: 12px;
+        }
+
+        @keyframes cursorBlink {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes glowPulse {
+
+            0%,
+            100% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .start-btn::before,
+            .start-btn::after {
+                animation: none;
+            }
+        }
+
+        /* --- Project previews strip ---
+           Endless marquee of game screenshots at the bottom of the hero.
+           The script clones the list once so translateX(-50%) loops seamlessly. */
+        .hero-previews {
+            --card-w: 168px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 26px;
+            z-index: 4;
+            overflow: hidden;
+            padding: 10px 0 14px;
+            -webkit-mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+            mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+            transition: opacity 0.9s ease-out 0.9s, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.9s;
+        }
+
+        /* Intro: strip waits below until the name and roles are in */
+        .intro .hero-previews {
+            opacity: 0;
+            transform: translateY(30px);
+            pointer-events: none;
+        }
+
+        .intro.intro-done .hero-previews {
+            opacity: 1;
+            transform: none;
+            pointer-events: auto;
+        }
+
+        .preview-track {
+            display: flex;
+            width: max-content;
+            list-style: none;
+            animation: previewScroll 80s linear infinite;
+        }
+
+        .hero-previews:hover .preview-track,
+        .hero-previews:focus-within .preview-track {
+            animation-play-state: paused;
+        }
+
+        /* Spacing via margin (not gap) so the -50% loop point lands exactly */
+        .preview-track li {
+            margin-right: 18px;
+        }
+
+        .preview-card {
+            position: relative;
+            display: block;
+            width: var(--card-w);
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #0a0f1f;
+            border: 2px solid rgba(143, 233, 255, 0.3);
+            box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.45);
+            opacity: 0.7;
+            filter: saturate(0.75);
+            transition: opacity 0.2s ease, filter 0.2s ease, transform 0.2s ease,
+                border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .preview-card img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .preview-card:hover,
+        .preview-card:focus-visible {
+            opacity: 1;
+            filter: none;
+            transform: translateY(-5px);
+            border-color: #8fe9ff;
+            box-shadow: 5px 5px 0 0 rgba(0, 0, 0, 0.45), 0 0 18px rgba(143, 233, 255, 0.45);
+            outline: none;
+        }
+
+        /* Game name, shown on hover */
+        .preview-label {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 14px 8px 6px;
+            background: linear-gradient(to top, rgba(10, 15, 31, 0.95), transparent);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #8fe9ff;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .preview-card:hover .preview-label,
+        .preview-card:focus-visible .preview-label {
+            opacity: 1;
+            transform: none;
+        }
+
+        @keyframes previewScroll {
+            to {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hero-previews {
+                --card-w: 120px;
+                bottom: 14px;
+            }
+
+            .preview-track li {
+                margin-right: 12px;
+            }
+        }
+
+        @media (max-height: 760px) {
+            .hero-previews {
+                --card-w: 130px;
+                bottom: 14px;
+            }
+        }
+
+        /* Touch screens: no hover, so keep the label visible */
+        @media (hover: none) {
+            .preview-label {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* Reduced motion: static strip the user can scroll by hand */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-previews {
+                overflow-x: auto;
+                transition: none;
+            }
+
+            .preview-track {
+                animation: none;
+                padding: 0 12vw;
+            }
+
+            .preview-track [data-clone] {
+                display: none;
+            }
+        }
+
+        /* ===== SOBRE MÍ ===== */
+        /* Shared palette for the HUD-style sections */
+        .about,
+        .projects,
+        .extras {
+            --cyan: #8fe9ff;
+            --cyan-soft: rgba(143, 233, 255, 0.55);
+            --cyan-faint: rgba(143, 233, 255, 0.18);
+            --glow: 0 0 10px rgba(143, 233, 255, 0.45);
+            --panel: rgba(18, 28, 52, 0.6);
+            --text: #dce6f5;
+            --text-dim: rgba(220, 230, 245, 0.62);
+        }
+
+        .about {
+            position: relative;
+            min-height: 100vh;
+            padding: 110px 48px 64px;
+            background:
+                radial-gradient(ellipse at 50% 35%, rgba(60, 110, 170, 0.18), transparent 60%),
+                linear-gradient(rgba(143, 233, 255, 0.025) 1px, transparent 1px) 0 0 / 40px 40px,
+                linear-gradient(90deg, rgba(143, 233, 255, 0.025) 1px, transparent 1px) 0 0 / 40px 40px,
+                #0f1428;
+            font-family: 'Chakra Petch', 'Inter', sans-serif;
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        /* Fade the grid and glow in from the top, continuing the hero's fade */
+        .about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 220px;
+            background: linear-gradient(to bottom, #0f1428 0%, rgba(15, 20, 40, 0.6) 45%, rgba(15, 20, 40, 0) 100%);
+            pointer-events: none;
+        }
+
+        /* HUD frame around the section */
+        .about-frame {
+            position: absolute;
+            inset: 84px 20px 20px;
+            border: 1px solid var(--cyan-faint);
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .about-frame::before,
+        .about-frame::after {
+            content: '';
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--cyan-soft);
+        }
+
+        .about-frame::before {
+            top: -2px;
+            left: -2px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .about-frame::after {
+            bottom: -2px;
+            right: -2px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Top-right corner: CV button + battery */
+        .about-actions {
+            position: absolute;
+            top: 104px;
+            right: 44px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .cv-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 30px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #5aa9ff 0%, #3b82f6 55%, #2563eb 100%);
+            color: #ffffff;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow:
+                0 4px 0 #1d4ed8,
+                0 6px 18px rgba(59, 130, 246, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .cv-btn svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+
+        .cv-btn:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 6px 0 #1d4ed8,
+                0 10px 26px rgba(59, 130, 246, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .cv-btn:active {
+            transform: translateY(3px);
+            box-shadow:
+                0 1px 0 #1d4ed8,
+                0 2px 8px rgba(59, 130, 246, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .cv-btn:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 4px;
+        }
+
+        .about-battery {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6dffa8;
+        }
+
+        .about-battery svg {
+            width: 14px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        .about-battery span {
+            position: relative;
+            width: 36px;
+            height: 18px;
+            border: 2px solid currentColor;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        .about-battery span::before {
+            content: '';
+            display: block;
+            height: 100%;
+            width: 85%;
+            background: currentColor;
+            border-radius: 1px;
+            box-shadow: 0 0 8px currentColor;
+        }
+
+        .about-battery span::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: 3px;
+            width: 3px;
+            height: 8px;
+            background: currentColor;
+            border-radius: 0 2px 2px 0;
+        }
+
+        .about-grid {
+            position: relative;
+            max-width: 1760px;
+            margin: 0 auto;
+            display: grid;
+            /* Equal side columns keep the center column truly centered */
+            grid-template-columns: minmax(310px, 1fr) minmax(360px, 0.8fr) minmax(310px, 1fr);
+            grid-template-areas:
+                "desc   center  studies"
+                "exp    center  skills";
+            column-gap: clamp(48px, 10vw - 32px, 160px);
+            row-gap: 40px;
+        }
+
+        .about-heading {
+            font-family: 'Chakra Petch', sans-serif;
+            font-weight: 600;
+            font-size: 1.35rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text);
+            padding-bottom: 8px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid var(--cyan-faint);
+            box-shadow: 0 1px 0 rgba(143, 233, 255, 0.08);
+            text-shadow: var(--glow);
+        }
+
+        /* --- Descripción --- */
+        /* Left column is nudged down without pushing the right column;
+           the grid's bottom padding makes room for that offset */
+        .about-desc,
+        .about-exp,
+        .about-center {
+            position: relative;
+            top: 70px;
+        }
+
+        .about-center {
+            top: 90px;
+        }
+
+        .about-grid {
+            padding-bottom: 70px;
+        }
+
+        .about-desc {
+            grid-area: desc;
+        }
+
+        /* ===== RETRO WINDOWS =====
+           Pixel border with notched corners (4 offset shadows), bevel and a hard drop shadow.
+           --bc / --glow-extra can be changed per state; the rest recomputes on the element. */
+        .desc-panel,
+        .exp-card,
+        .extra-panel,
+        .game-window {
+            --px: 3px;
+            --bc: rgba(143, 233, 255, 0.45);
+            /* Two rings of pixels: the outer one is shorter, giving stair-stepped corners */
+            --pixel-border:
+                0 calc(-1 * var(--px)) 0 0 var(--bc),
+                0 var(--px) 0 0 var(--bc),
+                calc(-1 * var(--px)) 0 0 0 var(--bc),
+                var(--px) 0 0 0 var(--bc),
+                0 calc(-3 * var(--px)) 0 calc(-1 * var(--px)) var(--bc),
+                0 calc(3 * var(--px)) 0 calc(-1 * var(--px)) var(--bc),
+                calc(-3 * var(--px)) 0 0 calc(-1 * var(--px)) var(--bc),
+                calc(3 * var(--px)) 0 0 calc(-1 * var(--px)) var(--bc);
+            --bevel: inset 3px 3px 0 rgba(255, 255, 255, 0.06), inset -3px -3px 0 rgba(0, 0, 0, 0.3);
+            --drop: 8px 8px 0 0 rgba(0, 0, 0, 0.35);
+            --glow-extra: 0 0 0 transparent;
+            border: none;
+            border-radius: 0;
+            box-shadow: var(--bevel), var(--pixel-border), var(--drop), var(--glow-extra);
+        }
+
+        .desc-panel {
+            position: relative;
+            min-height: 340px;
+            padding: 22px 26px;
+            background: var(--panel);
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--text-dim);
+        }
+
+        .desc-panel p+p {
+            margin-top: 14px;
+        }
+
+        .desc-panel strong {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        /* --- Foto --- */
+        .photo-frame {
+            position: relative;
+            width: 260px;
+            max-width: 100%;
+            aspect-ratio: 1;
+            display: grid;
+            place-items: center;
+            filter: drop-shadow(0 0 14px rgba(143, 233, 255, 0.35));
+        }
+
+        .photo-frame>svg.photo-octagon {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+            shape-rendering: crispEdges;
+        }
+
+        /* Retro spin: steps() makes it jump like a low-framerate sprite */
+        .octagon-outer,
+        .octagon-inner {
+            transform-origin: 100px 100px;
+        }
+
+        .octagon-outer {
+            animation: retroSpin 24s steps(48) infinite;
+        }
+
+        .octagon-inner {
+            animation: retroSpin 16s steps(32) infinite reverse;
+        }
+
+        @keyframes retroSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Corner pixels blink in turn like HUD lights */
+        .octagon-pip {
+            fill: #8fe9ff;
+            animation: pipBlink 2.4s steps(1) infinite;
+        }
+
+        .octagon-pip:nth-child(even) {
+            animation-delay: 1.2s;
+        }
+
+        @keyframes pipBlink {
+            50% {
+                fill: #e8f7ff;
+                opacity: 0.35;
+            }
+        }
+
+        .photo-circle {
+            position: relative;
+            width: 72%;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--cyan);
+            background: #0b1d45;
+            display: grid;
+            place-items: center;
+        }
+
+        .photo-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-circle svg {
+            width: 80%;
+            margin-top: 20%;
+            fill: #3a3f4a;
+        }
+
+        /* --- Foto + título + rol principal --- */
+        .about-center {
+            grid-area: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .about-title {
+            margin-top: 22px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: clamp(2.4rem, 3.6vw, 3.6rem);
+            font-weight: 700;
+            white-space: nowrap;
+            line-height: 1.1;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #e8f7ff;
+            text-shadow: 0 0 6px rgba(143, 233, 255, 0.8), 0 0 22px rgba(143, 233, 255, 0.45);
+        }
+
+        .main-role {
+            margin-top: 40px;
+        }
+
+        .main-role h3 {
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            text-shadow: var(--glow);
+        }
+
+        .main-role-icons {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        /* --- NEXT button (same style as START) --- */
+        .about-next {
+            display: flex;
+            justify-content: center;
+        }
+
+        .about-next--center {
+            margin-top: 44px;
+        }
+
+        .about-next--end {
+            grid-area: next;
+            display: none;
+            margin-top: 16px;
+        }
+
+        .about-next .start-btn {
+            margin-top: 0;
+        }
+
+        /* --- Tech icon tile (shared) --- */
+        .tech {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .tech-tile {
+            width: 56px;
+            height: 56px;
+            display: grid;
+            place-items: center;
+            background: #0c1224;
+            border: 2px solid var(--cyan-soft);
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(143, 233, 255, 0.25), inset 0 0 10px rgba(143, 233, 255, 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .tech-tile i {
+            font-size: 30px;
+            color: #eef8ff;
+        }
+
+        .tech:hover .tech-tile {
+            transform: translateY(-3px);
+            border-color: var(--cyan);
+            box-shadow: 0 0 20px rgba(143, 233, 255, 0.55), inset 0 0 12px rgba(143, 233, 255, 0.2);
+        }
+
+        .tech:hover {
+            color: var(--cyan);
+        }
+
+        .main-role .tech {
+            gap: 10px;
+            font-size: 1rem;
+        }
+
+        .main-role .tech-tile {
+            width: 88px;
+            height: 88px;
+            border-radius: 8px;
+        }
+
+        .main-role .tech-tile i {
+            font-size: 52px;
+        }
+
+        /* --- Experiencia laboral --- */
+        .about-exp {
+            grid-area: exp;
+            /* Extra gap below the description */
+            margin-top: 110px;
+        }
+
+        .timeline {
+            position: relative;
+            list-style: none;
+            padding-left: 44px;
+        }
+
+        /* Rail segment from each node to the next one */
+        .exp-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 23px;
+            bottom: -41px;
+            width: 2px;
+            background: var(--cyan-soft);
+            box-shadow: var(--glow);
+        }
+
+        .exp-item {
+            position: relative;
+            margin-bottom: 18px;
+        }
+
+        .exp-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Node on the rail */
+        .exp-item::before {
+            content: '';
+            position: absolute;
+            left: -40px;
+            top: 16px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #0f1428;
+            border: 2px solid var(--cyan);
+            box-shadow: 0 0 10px var(--cyan), inset 0 0 4px var(--cyan);
+            z-index: 1;
+            transition: background 0.2s ease;
+        }
+
+        .exp-item:hover::before {
+            background: var(--cyan);
+        }
+
+        .exp-card {
+            position: relative;
+            padding: 12px 16px;
+            background: var(--panel);
+            transition: box-shadow 0.2s ease;
+            outline: none;
+        }
+
+        .exp-item:hover .exp-card {
+            --bc: rgba(143, 233, 255, 0.8);
+            --glow-extra: 0 0 16px rgba(143, 233, 255, 0.15);
+        }
+
+        .exp-title {
+            font-weight: 600;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .exp-meta {
+            margin-top: 2px;
+            font-size: 0.9rem;
+            color: var(--cyan);
+        }
+
+        /* Logros clave */
+        .exp-details {
+            margin-top: 12px;
+            padding-left: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-dim);
+        }
+
+        .exp-details li::marker {
+            color: var(--cyan);
+        }
+
+        /* --- Estudios (same card style as Experiencia laboral) --- */
+        .about-studies {
+            grid-area: studies;
+            align-self: start;
+            /* Level with the top of the photo */
+            position: relative;
+            top: 90px;
+        }
+
+        .exp-date {
+            margin-top: 2px;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        /* --- Habilidades técnicas (skill tree) --- */
+        .about-skills {
+            grid-area: skills;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .about-skills .about-heading {
+            align-self: stretch;
+        }
+
+        .skill-tree {
+            position: relative;
+            width: 300px;
+            height: 310px;
+            display: grid;
+            grid-template-columns: repeat(3, 100px);
+            grid-template-rows: 96px 110px 96px;
+            justify-items: center;
+        }
+
+        .skill-tree>svg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .skill-tree line,
+        .skill-tree polyline {
+            stroke: var(--cyan-soft);
+            stroke-width: 2;
+            fill: none;
+            filter: drop-shadow(0 0 3px rgba(143, 233, 255, 0.6));
+        }
+
+        .skill-tree .tech {
+            position: relative;
+        }
+
+        /* Keep connector lines from crossing the labels */
+        .skill-tree .tech-label {
+            padding: 0 4px;
+            background: #0f1428;
+        }
+
+        .skill-tree .tech-tile {
+            width: 52px;
+            height: 52px;
+        }
+
+        .skill-tree .tech-tile i {
+            font-size: 28px;
+        }
+
+        /* --- Scroll reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .octagon-outer,
+            .octagon-inner,
+            .octagon-pip {
+                animation: none;
+            }
+        }
+
+        /* ===== TERCERA SECCIÓN (PROYECTOS) ===== */
+        /* Dark navy close to "Sobre mí", a touch bluer and lighter */
+        .projects {
+            position: relative;
+            min-height: 100vh;
+            padding: 110px 48px 64px;
+            background:
+                radial-gradient(ellipse at 50% 30%, rgba(80, 140, 220, 0.2), transparent 60%),
+                linear-gradient(rgba(143, 233, 255, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
+                linear-gradient(90deg, rgba(143, 233, 255, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
+                linear-gradient(to bottom, #1a2d5c 0%, #172850 50%, #142244 100%);
+            overflow: hidden;
+        }
+
+        /* Blend from the dark "Sobre mí" background into the blue */
+        .projects::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 35vh;
+            background: linear-gradient(to bottom,
+                    #0f1428 0%,
+                    rgba(15, 20, 40, 0.85) 13%,
+                    rgba(15, 20, 40, 0.62) 28%,
+                    rgba(15, 20, 40, 0.38) 45%,
+                    rgba(15, 20, 40, 0.18) 62%,
+                    rgba(15, 20, 40, 0.06) 80%,
+                    rgba(15, 20, 40, 0) 100%);
+            pointer-events: none;
+        }
+
+        .projects-inner {
+            position: relative;
+            max-width: 1760px;
+            margin: 0 auto;
+            font-family: 'Chakra Petch', 'Inter', sans-serif;
+            color: var(--text);
+        }
+
+        .projects-title {
+            display: inline-block;
+            margin-bottom: 36px;
+            padding-bottom: 10px;
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #e8f7ff;
+            border-bottom: 2px solid var(--cyan-soft);
+            text-shadow: 0 0 6px rgba(143, 233, 255, 0.8), 0 0 22px rgba(143, 233, 255, 0.45);
+        }
+
+        /* --- Game "window" (shared by featured + grid cards) --- */
+        .game-window {
+            position: relative;
+            background: var(--panel);
+            overflow: hidden;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .game-window:hover {
+            transform: translateY(-4px);
+            --bc: rgba(143, 233, 255, 0.85);
+            --glow-extra: 0 0 24px rgba(143, 233, 255, 0.2);
+        }
+
+        /* Image / video area */
+        .game-media {
+            position: relative;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1d2b52 0%, #111a33 100%);
+        }
+
+        .game-media img,
+        .game-media video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .game-window:hover .game-media img {
+            transform: scale(1.05);
+        }
+
+        /* Placeholder shown until a real image/video is added */
+        .media-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: rgba(143, 233, 255, 0.45);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .media-placeholder svg {
+            width: 48px;
+            height: 48px;
+            fill: currentColor;
+        }
+
+        /* Title strip stuck under the image */
+        .game-titlebar {
+            padding: 12px 16px;
+            border-top: 1px solid var(--cyan-faint);
+            background: rgba(12, 18, 36, 0.85);
+            font-weight: 600;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-window:hover .game-titlebar {
+            color: var(--cyan);
+        }
+
+        /* --- Interactive project card (grid) ---
+           Hover / keyboard focus: the card widens (the others narrow to make room, nothing
+           overlaps), the preview image gives way to a looping video, the game logo appears
+           bottom-left and the title turns into keywords + "Ver más". */
+        .game-card {
+            cursor: pointer;
+        }
+
+        .game-card .game-media img,
+        .game-card:hover .game-media img {
+            transform: none;
+        }
+
+        .card-preview,
+        .card-video {
+            position: absolute;
+            inset: 0;
+        }
+
+        .card-preview {
+            z-index: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        /* The image stays until the video actually has frames to show */
+        .game-card.is-playing .card-preview {
+            opacity: 0;
+        }
+
+        .card-logo {
+            position: absolute;
+            left: 12px;
+            bottom: 10px;
+            z-index: 2;
+            width: 58% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            opacity: 0;
+            transform: translateY(6px);
+            filter: drop-shadow(0 2px 0 #000) drop-shadow(0 0 6px rgba(0, 0, 0, 0.9));
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+
+        .game-card:hover .card-logo,
+        .game-card:focus-within .card-logo {
+            opacity: 1;
+            transform: none;
+            transition-delay: 0.2s;
+        }
+
+        /* Tags on top of the media (same look as the featured project's tags) */
+        .card-tags {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 3;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            pointer-events: none;
+        }
+
+        .card-tag {
+            padding: 4px 9px;
+            background: #000;
+            border: 1px solid var(--card-line, rgba(143, 233, 255, 0.45));
+            border-radius: 4px;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--card-accent, var(--cyan));
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        /* Title bar: title by default, keywords + button on hover */
+        .game-card .game-titlebar {
+            position: relative;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+        }
+
+        .card-title {
+            font: inherit;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: opacity 0.2s ease;
+        }
+
+        .card-hover-bar {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 0 12px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .game-card:hover .card-title,
+        .game-card:focus-within .card-title {
+            opacity: 0;
+        }
+
+        .game-card:hover .card-hover-bar,
+        .game-card:focus-within .card-hover-bar {
+            opacity: 1;
+            pointer-events: auto;
+            transition-delay: 0.2s;
+        }
+
+        .card-keywords {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            min-width: 0;
+            list-style: none;
+        }
+
+        .card-keywords li {
+            padding: 3px 8px;
+            border: 1px solid var(--card-line, var(--cyan-faint));
+            background: rgba(0, 0, 0, 0.45);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.66rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            line-height: 1.4;
+            text-transform: uppercase;
+            color: var(--card-accent, var(--cyan));
+            white-space: nowrap;
+        }
+
+        /* Smaller "Ver más" for the grid cards */
+        .featured-more.featured-more--sm {
+            flex-shrink: 0;
+            align-self: center;
+            margin-top: 0;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            box-shadow: 0 3px 0 #7a2bb3, 0 4px 10px rgba(220, 90, 255, 0.35);
+        }
+
+        .featured-more.featured-more--sm svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Per-game theme: Goblin Invasion (green) */
+        .game-card--goblin {
+            --card-accent: #7dff8a;
+            --card-line: rgba(110, 230, 120, 0.5);
+            --bc: rgba(110, 230, 120, 0.55);
+            background: radial-gradient(ellipse at 50% 40%, #173a22 0%, #0f2718 60%, #0a1a10 100%);
+        }
+
+        .game-card--goblin:hover,
+        .game-card--goblin:focus-within {
+            --bc: rgba(140, 255, 150, 0.9);
+            --glow-extra: 0 0 28px rgba(110, 230, 120, 0.3);
+        }
+
+        .game-card--goblin .game-titlebar {
+            background: rgba(8, 26, 14, 0.9);
+            border-top-color: rgba(110, 230, 120, 0.3);
+        }
+
+        .game-card--goblin:hover .game-titlebar {
+            color: var(--card-accent);
+        }
+
+        .game-card--goblin .featured-more {
+            background: linear-gradient(135deg, #7dff8a 0%, #1fa34a 100%);
+            color: #06210f;
+            box-shadow: 0 3px 0 #146b31, 0 4px 10px rgba(90, 230, 110, 0.35);
+        }
+
+        .game-card--goblin .featured-more:hover {
+            box-shadow: 0 5px 0 #146b31, 0 8px 20px rgba(90, 230, 110, 0.5);
+        }
+
+        /* Per-game theme: Human Revenge (light, almost white pink) */
+        .game-card--human {
+            --card-accent: #ffc9ee;
+            --card-line: rgba(255, 201, 238, 0.5);
+            --bc: rgba(255, 201, 238, 0.55);
+            background: radial-gradient(ellipse at 50% 40%, #3d1c33 0%, #2a1224 60%, #180a14 100%);
+        }
+
+        .game-card--human:hover,
+        .game-card--human:focus-within {
+            --bc: rgba(255, 228, 246, 0.9);
+            --glow-extra: 0 0 28px rgba(255, 201, 238, 0.3);
+        }
+
+        .game-card--human .game-titlebar {
+            background: rgba(26, 10, 22, 0.9);
+            border-top-color: rgba(255, 201, 238, 0.3);
+        }
+
+        .game-card--human:hover .game-titlebar {
+            color: var(--card-accent);
+        }
+
+        .game-card--human .featured-more {
+            background: linear-gradient(135deg, #fff0fa 0%, #ff9ad9 100%);
+            color: #3a0f2c;
+            box-shadow: 0 3px 0 #b04a8f, 0 4px 10px rgba(255, 170, 225, 0.35);
+        }
+
+        .game-card--human .featured-more:hover {
+            box-shadow: 0 5px 0 #b04a8f, 0 8px 20px rgba(255, 170, 225, 0.5);
+        }
+
+        /* Per-game theme: Yetilette (cyan) */
+        .game-card--yeti {
+            --card-accent: #4df3ff;
+            --card-line: rgba(77, 243, 255, 0.5);
+            --bc: rgba(77, 243, 255, 0.55);
+            background: radial-gradient(ellipse at 50% 40%, #123a46 0%, #0b2733 60%, #06171f 100%);
+        }
+
+        .game-card--yeti:hover,
+        .game-card--yeti:focus-within {
+            --bc: rgba(140, 250, 255, 0.9);
+            --glow-extra: 0 0 28px rgba(77, 243, 255, 0.3);
+        }
+
+        .game-card--yeti .game-titlebar {
+            background: rgba(4, 20, 28, 0.9);
+            border-top-color: rgba(77, 243, 255, 0.3);
+        }
+
+        .game-card--yeti:hover .game-titlebar {
+            color: var(--card-accent);
+        }
+
+        .game-card--yeti .featured-more {
+            background: linear-gradient(135deg, #7ff8ff 0%, #1c9fd8 100%);
+            color: #04202b;
+            box-shadow: 0 3px 0 #0e5f85, 0 4px 10px rgba(77, 243, 255, 0.35);
+        }
+
+        .game-card--yeti .featured-more:hover {
+            box-shadow: 0 5px 0 #0e5f85, 0 8px 20px rgba(77, 243, 255, 0.5);
+        }
+
+        /* Per-game theme: Endless Curse (blue, a bit darker than Yetilette) */
+        .game-card--curse {
+            --card-accent: #3aa6ff;
+            --card-line: rgba(58, 166, 255, 0.5);
+            --bc: rgba(58, 166, 255, 0.55);
+            background: radial-gradient(ellipse at 50% 40%, #102a4d 0%, #0a1c38 60%, #050f22 100%);
+        }
+
+        .game-card--curse:hover,
+        .game-card--curse:focus-within {
+            --bc: rgba(120, 195, 255, 0.9);
+            --glow-extra: 0 0 28px rgba(58, 166, 255, 0.3);
+        }
+
+        .game-card--curse .game-titlebar {
+            background: rgba(4, 12, 28, 0.9);
+            border-top-color: rgba(58, 166, 255, 0.3);
+        }
+
+        .game-card--curse:hover .game-titlebar {
+            color: var(--card-accent);
+        }
+
+        .game-card--curse .featured-more {
+            background: linear-gradient(135deg, #7cc4ff 0%, #1f6bff 100%);
+            color: #031430;
+            box-shadow: 0 3px 0 #103f99, 0 4px 10px rgba(58, 166, 255, 0.35);
+        }
+
+        .game-card--curse .featured-more:hover {
+            box-shadow: 0 5px 0 #103f99, 0 8px 20px rgba(58, 166, 255, 0.5);
+        }
+
+        /* Square logos would cover the whole card at the default width */
+        .card-logo.card-logo--square {
+            width: 30% !important;
+        }
+
+        /* Tags one under the other (e.g. studio + award) */
+        .card-tags--stack {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Award badge: gold, stands out from the regular tags */
+        .card-tag.card-tag--award {
+            background: linear-gradient(180deg, #ffe27a 0%, #e0a92a 100%);
+            border-color: #fff1b8;
+            color: #3a2600;
+        }
+        /* Touch screens have no hover: show keywords + button, keep the still image */
+        @media (hover: none) {
+            .game-card .card-title {
+                display: none;
+            }
+
+            .game-card .card-hover-bar {
+                opacity: 1;
+                pointer-events: auto;
+            }
+
+            .game-card .card-logo {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* --- Featured project --- */
+        .game-featured {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+            margin-bottom: 40px;
+        }
+
+        .game-featured:hover {
+            transform: none;
+        }
+
+        /* Sacramento theme: opaque purple, darker/glowing towards the edges */
+        .game-featured {
+            background:
+                radial-gradient(ellipse at 60% 45%, #3b1d5e 0%, #2c1548 55%, #1b0c2e 100%);
+            --bc: rgba(220, 150, 255, 0.6);
+            --bevel: inset 0 0 60px rgba(160, 80, 220, 0.3), inset 3px 3px 0 rgba(255, 255, 255, 0.08), inset -3px -3px 0 rgba(0, 0, 0, 0.35);
+        }
+
+        .game-featured:hover {
+            --bc: rgba(235, 180, 255, 0.9);
+            --glow-extra: 0 0 28px rgba(190, 110, 255, 0.3);
+        }
+
+        .game-featured .game-media {
+            border-right: 1px solid rgba(200, 130, 255, 0.3);
+            background: #000;
+        }
+
+        .featured-info {
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .featured-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        .featured-tag {
+            padding: 6px 14px;
+            background: #000;
+            border: 1px solid rgba(230, 170, 255, 0.45);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #f0c4ff;
+            /* Small hard shadow, same retro style as the windows */
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .featured-tag--dev {
+            background: #5c0f1c;
+            border-color: rgba(255, 110, 130, 0.45);
+            color: #ffd9de;
+        }
+
+        /* Game logo in place of a text title */
+        .featured-logo {
+            display: block;
+            width: 100%;
+            max-width: 460px;
+            height: auto;
+            filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.55));
+        }
+
+        .featured-desc {
+            margin-top: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--text-dim);
+        }
+
+        .featured-desc p+p {
+            margin-top: 12px;
+        }
+
+        /* "Tipo de juego / Narrativa" labels */
+        .featured-desc .desc-label {
+            display: block;
+            margin-bottom: 4px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #f0c4ff;
+        }
+
+        /* Highlighted key words */
+        .featured-desc .hl {
+            color: #ff7ad9;
+            font-weight: 600;
+        }
+
+        /* "Ver más" button, bottom-right of the featured card */
+        .featured-more {
+            align-self: flex-end;
+            margin-top: auto;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #ff5fc8 0%, #b44dff 100%);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #fff;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #7a2bb3, 0 6px 16px rgba(220, 90, 255, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .featured-more:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #7a2bb3, 0 10px 24px rgba(220, 90, 255, 0.5);
+        }
+
+        .featured-more svg {
+            width: 18px;
+            height: 18px;
+            transition: transform 0.15s ease;
+        }
+
+        .featured-more:hover svg {
+            transform: translateX(4px);
+        }
+
+        /* --- Closing featured project (under the grid) ---
+           Same layout as Sacramento but mirrored (info left, media right), narrower and with
+           smaller type, so Sacramento keeps the spotlight. Theme: Nightmar-T (red). */
+        .game-featured.game-featured--closing {
+            --fc-accent: #ff5a4f;
+            --fc-accent-2: #ff9a3c;
+            --fc-line: rgba(255, 90, 79, 0.45);
+            --fc-text: #ffd6d0;
+            max-width: 1240px;
+            margin: 44px auto 0;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+            background: radial-gradient(ellipse at 40% 45%, #4a1414 0%, #331010 55%, #1c0808 100%);
+            --bc: rgba(255, 90, 79, 0.55);
+            --bevel: inset 0 0 50px rgba(220, 50, 40, 0.25), inset 3px 3px 0 rgba(255, 255, 255, 0.07), inset -3px -3px 0 rgba(0, 0, 0, 0.35);
+        }
+
+        /* Hover / keyboard focus: the card widens (still narrower than Sacramento) */
+        @media (hover: hover) and (min-width: 1101px) {
+            .game-featured.game-featured--closing {
+                transition: max-width 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+            }
+
+            .game-featured.game-featured--closing:hover,
+            .game-featured.game-featured--closing:focus-within {
+                max-width: 1480px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .game-featured.game-featured--closing {
+                transition: none;
+            }
+        }
+
+        .game-featured--closing:hover {
+            --bc: rgba(255, 140, 120, 0.9);
+            --glow-extra: 0 0 26px rgba(255, 70, 60, 0.3);
+        }
+
+        .game-featured--closing .game-media {
+            order: 2;
+            border-right: none;
+            border-left: 1px solid var(--fc-line);
+            background: #000;
+        }
+
+        .game-featured--closing .featured-info {
+            padding: 28px 32px;
+        }
+
+        .game-featured--closing .featured-tags {
+            margin-bottom: 16px;
+        }
+
+        .game-featured--closing .featured-tag {
+            padding: 5px 12px;
+            font-size: 0.72rem;
+            border-color: var(--fc-line);
+            color: var(--fc-text);
+        }
+
+        .game-featured--closing .featured-tag--dev {
+            border-color: rgba(255, 110, 130, 0.45);
+            color: #ffd9de;
+        }
+
+        .game-featured--closing .featured-logo {
+            max-width: 340px;
+        }
+
+        /* Text title until the game has a logo image */
+        .featured-title-text {
+            font-size: clamp(1.5rem, 2.2vw, 2rem);
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--fc-accent, #e8f7ff);
+            text-shadow: 0 0 14px rgba(0, 0, 0, 0.6);
+        }
+
+        .game-featured--closing .featured-desc {
+            margin-top: 14px;
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .game-featured--closing .featured-desc .desc-label {
+            font-size: 0.72rem;
+            color: var(--fc-text);
+        }
+
+        .game-featured--closing .featured-desc .hl {
+            color: var(--fc-accent);
+        }
+
+        .game-featured--closing .featured-more {
+            padding: 10px 18px;
+            font-size: 0.8rem;
+            background: linear-gradient(135deg, var(--fc-accent-2) 0%, #d62828 100%);
+            color: #fff;
+            box-shadow: 0 3px 0 #7a1010, 0 5px 14px rgba(255, 70, 60, 0.35);
+        }
+
+        .game-featured--closing .featured-more:hover {
+            box-shadow: 0 5px 0 #7a1010, 0 9px 22px rgba(255, 70, 60, 0.5);
+        }
+
+        /* --- Grid of 4 projects --- */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 28px;
+        }
+
+        /* Desktop: flex row, the hovered card takes more width and the rest shrink */
+        @media (min-width: 1101px) {
+            .games-grid {
+                display: flex;
+                align-items: flex-start;
+            }
+
+            .games-grid > .game-window {
+                flex: 1 1 0;
+                min-width: 0;
+                transition: flex-grow 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease;
+            }
+
+            .games-grid > .game-card:hover,
+            .games-grid > .game-card:focus-within {
+                flex-grow: 1.9;
+                transform: none;
+            }
+        }
+
+        @media (min-width: 1101px) and (prefers-reduced-motion: reduce) {
+            .games-grid > .game-window {
+                transition: none;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            .game-featured {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .game-featured .game-media {
+                border-right: none;
+                border-bottom: 1px solid var(--cyan-faint);
+            }
+
+            /* Stacked: media back on top, like Sacramento */
+            .game-featured--closing .game-media {
+                order: 0;
+                border-left: none;
+            }
+
+            .games-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 700px) {
+            .projects {
+                padding: 100px 18px 48px;
+            }
+
+            .featured-info {
+                padding: 24px 20px;
+            }
+
+            .games-grid {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        /* ===== MÁS PROYECTOS + CONTACTO (closing section under "Mis Proyectos") ===== */
+        .extras {
+            position: relative;
+            padding: 40px 48px 32px;
+            background:
+                linear-gradient(rgba(143, 233, 255, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
+                linear-gradient(90deg, rgba(143, 233, 255, 0.035) 1px, transparent 1px) 0 0 / 40px 40px,
+                linear-gradient(to bottom, #142244 0%, #111b38 55%, #0f1428 100%);
+            font-family: 'Chakra Petch', 'Inter', sans-serif;
+            color: var(--text);
+            overflow: hidden;
+        }
+
+        .extras-inner {
+            max-width: 1240px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            gap: 40px;
+            align-items: stretch;
+        }
+
+        .extras-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .extra-panel {
+            position: relative;
+            flex: 1;
+            padding: 28px 30px;
+            background: var(--panel);
+        }
+
+        /* --- Más proyectos --- */
+        .more-panel {
+            display: flex;
+            gap: 26px;
+            align-items: center;
+            background:
+                radial-gradient(ellipse at 15% 50%, rgba(250, 92, 92, 0.16), transparent 60%),
+                var(--panel);
+        }
+
+        /* Pixel "cartridge" icon on the left */
+        .more-icon {
+            flex-shrink: 0;
+            width: 96px;
+            height: 96px;
+            display: grid;
+            place-items: center;
+            background: #0b1024;
+            border: 3px solid rgba(250, 92, 92, 0.7);
+            box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.45), 0 0 22px rgba(250, 92, 92, 0.25);
+        }
+
+        .more-icon svg {
+            width: 56px;
+            height: 56px;
+            fill: #fa5c5c;
+        }
+
+        .more-text h3 {
+            font-size: clamp(1.25rem, 1.8vw, 1.6rem);
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #e8f7ff;
+        }
+
+        .more-text p {
+            margin-top: 10px;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+
+        .more-text p strong {
+            color: var(--cyan);
+            font-weight: 600;
+        }
+
+        .itch-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px 22px;
+            border-radius: 8px;
+            background: linear-gradient(180deg, #ff7a7a 0%, #fa5c5c 55%, #e04444 100%);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            box-shadow: 0 4px 0 #a52a2a, 0 6px 16px rgba(250, 92, 92, 0.4);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .itch-btn:hover,
+        .itch-btn:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #a52a2a, 0 10px 24px rgba(250, 92, 92, 0.55);
+        }
+
+        .itch-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* --- Contacto --- */
+        .contact-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 10px;
+            margin: 0 -10px;
+            color: var(--text);
+            text-decoration: none;
+            transition: background 0.2s ease;
+        }
+
+        .contact-item:hover,
+        .contact-item:focus-visible {
+            background: rgba(143, 233, 255, 0.08);
+        }
+
+        .contact-icon {
+            flex-shrink: 0;
+            width: 46px;
+            height: 46px;
+            display: grid;
+            place-items: center;
+            background: #0b1024;
+            border: 2px solid var(--cyan-soft);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .contact-item:hover .contact-icon,
+        .contact-item:focus-visible .contact-icon {
+            border-color: var(--cyan);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45), var(--glow);
+        }
+
+        .contact-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: var(--cyan);
+        }
+
+        .contact-label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        .contact-value {
+            display: block;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+        }
+
+        .site-footer {
+            max-width: 1240px;
+            margin: 48px auto 0;
+            padding-top: 18px;
+            border-top: 1px solid var(--cyan-faint);
+            text-align: center;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 900px) {
+            .extras-inner {
+                grid-template-columns: minmax(0, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .extras {
+                padding: 32px 18px 28px;
+            }
+
+            .extra-panel {
+                padding: 22px 20px;
+            }
+
+            .more-panel {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .more-icon {
+                width: 72px;
+                height: 72px;
+            }
+
+            .more-icon svg {
+                width: 42px;
+                height: 42px;
+            }
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 1300px) {
+            .about {
+                padding: 110px 28px 56px;
+            }
+
+            /* Photo sits at the top here, so the CV button gets its own row */
+            .about-actions {
+                position: relative;
+                top: auto;
+                right: auto;
+                justify-content: flex-end;
+                margin-bottom: 24px;
+            }
+
+            .about-desc,
+            .about-exp,
+            .about-center {
+                top: 0;
+                margin-top: 0;
+            }
+
+            .about-grid {
+                padding-bottom: 0;
+            }
+
+            .about-next--center {
+                display: none;
+            }
+
+            .about-next--end {
+                display: flex;
+            }
+
+            .about-grid {
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+                grid-template-areas:
+                    "center  center"
+                    "desc    desc"
+                    "exp     studies"
+                    "exp     skills"
+                    "next    next";
+            }
+
+            .about-studies {
+                top: 0;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .about {
+                padding: 100px 18px 48px;
+            }
+
+            .about-frame,
+            .about-battery {
+                display: none;
+            }
+
+            .about-actions {
+                justify-content: center;
+                margin-bottom: 28px;
+            }
+
+            .about-grid {
+                grid-template-columns: minmax(0, 1fr);
+                grid-template-areas:
+                    "center"
+                    "desc"
+                    "exp"
+                    "studies"
+                    "skills"
+                    "next";
+            }
+
+            .photo-frame {
+                width: 180px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ===== HERO / PORTADA ===== -->
+    <section class="hero" id="hero">
+
+        <!-- Top Bar -->
+        <nav class="top-bar" aria-label="Secciones del portfolio">
+            <div class="profile-icon">
+                <img src="Avatar.png" alt="" aria-hidden="true">
+            </div>
+
+            <!-- Section shortcuts (the script highlights the one on screen as you scroll) -->
+            <div class="section-nav">
+                <ol>
+                    <li>
+                        <a class="nav-dot" href="#hero" data-label="Inicio" aria-label="Ir al inicio">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 3 2 12h3v8h6v-6h2v6h6v-8h3z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-dot" href="#sobreMi" data-label="Sobre mí" aria-label="Ir a Sobre mí">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .7.5 1.2 1.2 1.2h16.8c.7 0 1.2-.5 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-dot" href="#proyectos" data-label="Proyecto destacado"
+                            aria-label="Ir a Mis Proyectos: proyecto destacado">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd"
+                                    d="M6 7h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5.4 1.8L15 14H9l-1.6 1.8A3 3 0 0 1 2 14v-3a4 4 0 0 1 4-4zm1 3v1.5H5.5V13H7v1.5h1.5V13H10v-1.5H8.5V10H7zm9 .5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm2.5 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-dot" href="#mas-juegos" data-label="Otros juegos"
+                            aria-label="Ir a Mis Proyectos: otros juegos">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z" />
+                            </svg>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-dot" href="#contacto" data-label="Contacto"
+                            aria-label="Ir a Más proyectos y contacto">
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path
+                                    d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.33.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" />
+                            </svg>
+                        </a>
+                    </li>
+                </ol>
+            </div>
+
+            <span class="portfolio-year">Portfolio 2026</span>
+        </nav>
+
+        <!-- Background -->
+        <video class="hero-bg" src="Title.mp4" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
+
+        <!-- Main Content -->
+        <div class="hero-content">
+            <div class="hero-title">
+                <pre class="hero-code" id="heroCode" aria-hidden="true"></pre>
+                <div class="hero-title-text">
+                    <h1 class="hero-name">Abraham</h1>
+                    <p class="hero-surname">Román</p>
+                </div>
+            </div>
+
+            <!-- Role Selector: joystick · carousel · joystick -->
+            <div class="role-select" id="roleSelect">
+                <button class="stick-btn left" id="stickLeft" aria-label="Rol anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+                <div class="role-carousel" id="roleCarousel">
+                    <div class="role-track" id="roleTrack">
+                        <!-- Roles injected by JS -->
+                    </div>
+                </div>
+                <button class="stick-btn right" id="stickRight" aria-label="Rol siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Start Button -->
+            <button class="start-btn" id="startBtn"
+                onclick="document.getElementById('sobreMi').scrollIntoView({behavior:'smooth'})">
+                Start
+            </button>
+        </div>
+
+        <!-- Project previews: thumbnails live in img/previews (320×180 JPG).
+             To add one, copy an <li> and point it at the game's page. -->
+        <nav class="hero-previews" aria-label="Vista previa de mis proyectos">
+            <ul class="preview-track" id="previewTrack">
+                <li><a class="preview-card" href="Sacramento/index.html"><img src="img/previews/sacramento-keyart.jpg" alt="Sacramento: key art" width="320" height="180"><span class="preview-label">Sacramento</span></a></li>
+                <li><a class="preview-card" href="EndlessCurse/index.html"><img src="img/previews/endless-poblado.jpg" alt="Endless Curse: el poblado" width="320" height="180"><span class="preview-label">Endless Curse</span></a></li>
+                <li><a class="preview-card" href="GoblinInvasion/index.html"><img src="img/previews/goblin-jugar.jpg" alt="Goblin Invasion: la ola de goblins" width="320" height="180"><span class="preview-label">Goblin Invasion</span></a></li>
+                <li><a class="preview-card" href="HumanRevenge/index.html"><img src="img/previews/human-loop.jpg" alt="Human Revenge: escoltando la torre" width="320" height="180"><span class="preview-label">Human Revenge</span></a></li>
+                <li><a class="preview-card" href="Nightmar-T/index.html"><img src="img/previews/nightmart-inicio.jpg" alt="Nightmar-T: la presentación de la IA" width="320" height="180"><span class="preview-label">Nightmar-T</span></a></li>
+                <li><a class="preview-card" href="Yetilette/index.html"><img src="img/previews/yetilette-cruce.jpg" alt="Yetilette: el cruce de caminos" width="320" height="180"><span class="preview-label">Yetilette</span></a></li>
+                <li><a class="preview-card" href="EndlessCurse/index.html"><img src="img/previews/endless-mazmorra.jpg" alt="Endless Curse: la mazmorra" width="320" height="180"><span class="preview-label">Endless Curse</span></a></li>
+                <li><a class="preview-card" href="GoblinInvasion/index.html"><img src="img/previews/goblin-atacar.jpg" alt="Goblin Invasion: ordenar cargar" width="320" height="180"><span class="preview-label">Goblin Invasion</span></a></li>
+                <li><a class="preview-card" href="HumanRevenge/index.html"><img src="img/previews/human-torre.jpg" alt="Human Revenge: la torre de oxígeno" width="320" height="180"><span class="preview-label">Human Revenge</span></a></li>
+                <li><a class="preview-card" href="Nightmar-T/index.html"><img src="img/previews/nightmart-salida.jpg" alt="Nightmar-T: la salida bloqueada" width="320" height="180"><span class="preview-label">Nightmar-T</span></a></li>
+                <li><a class="preview-card" href="Yetilette/index.html"><img src="img/previews/yetilette-tobogan.jpg" alt="Yetilette: Tobogán del Pingüino" width="320" height="180"><span class="preview-label">Yetilette</span></a></li>
+                <li><a class="preview-card" href="EndlessCurse/index.html"><img src="img/previews/endless-agua.jpg" alt="Endless Curse: la sala del agua" width="320" height="180"><span class="preview-label">Endless Curse</span></a></li>
+                <li><a class="preview-card" href="HumanRevenge/index.html"><img src="img/previews/human-base.jpg" alt="Human Revenge: base humana" width="320" height="180"><span class="preview-label">Human Revenge</span></a></li>
+                <li><a class="preview-card" href="Nightmar-T/index.html"><img src="img/previews/nightmart-super.jpg" alt="Nightmar-T: puzle de las pantallas" width="320" height="180"><span class="preview-label">Nightmar-T</span></a></li>
+                <li><a class="preview-card" href="Yetilette/index.html"><img src="img/previews/yetilette-jefe.jpg" alt="Yetilette: pelea contra el jefe Yeti" width="320" height="180"><span class="preview-label">Yetilette</span></a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <!-- ===== SOBRE MÍ ===== -->
+    <section class="about" id="sobreMi" aria-labelledby="aboutTitle">
+        <div class="about-frame" aria-hidden="true"></div>
+        <div class="about-actions">
+            <!-- PDF generated from CV/cv.html -->
+            <a class="cv-btn" id="cvBtn" href="CV/CV_Abraham_Roman.pdf" download="CV_Abraham_Roman.pdf">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z" />
+                </svg>
+                Descargar CV
+            </a>
+            <div class="about-battery" aria-hidden="true">
+                <svg viewBox="0 0 14 18">
+                    <path d="M9 0 0 10h5l-1 8 10-11H8z" />
+                </svg>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="about-grid">
+
+            <!-- Descripción -->
+            <div class="about-desc reveal">
+                <h2 class="about-heading">Descripción</h2>
+                <div class="desc-panel">
+                    <p>Soy <strong>Abraham Román</strong>, un apasionado por los videojuegos que le gustaría
+                        evocar en los demás la sensación que estos han provocado en mí.</p>
+                    <p>Me considero una persona emprendedora y creativa que le encanta <strong>resolver
+                            problemas</strong> que
+                        se le presentan.</p>
+                    <p>Cuento con experiencia en la realización de varios proyectos personales, grupales
+                        y con la participación en varias Game Jams, en las que he podido desarrollar mis habilidades
+                        como <strong>programador</strong> y <strong>diseñador</strong> de videojuegos.</p>
+                    <p>Busco unirme a un equipo de desarrollo con el que pueda aportar mis
+                        <strong>conocimientos</strong> y
+                        <strong>habilidades</strong>, y seguir creciendo como profesional.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Foto + título + rol principal -->
+            <div class="about-center reveal">
+                <div class="photo-frame">
+                    <svg class="photo-octagon" viewBox="0 0 200 200" aria-hidden="true">
+                        <!-- Outer octagon + a square pixel on each corner -->
+                        <g class="octagon-outer">
+                            <polygon points="100,4 168,32 196,100 168,168 100,196 32,168 4,100 32,32" fill="none"
+                                stroke="#8fe9ff" stroke-width="3" stroke-linejoin="miter" />
+                            <g>
+                                <rect class="octagon-pip" x="95" y="-1" width="10" height="10" />
+                                <rect class="octagon-pip" x="163" y="27" width="10" height="10" />
+                                <rect class="octagon-pip" x="191" y="95" width="10" height="10" />
+                                <rect class="octagon-pip" x="163" y="163" width="10" height="10" />
+                                <rect class="octagon-pip" x="95" y="191" width="10" height="10" />
+                                <rect class="octagon-pip" x="27" y="163" width="10" height="10" />
+                                <rect class="octagon-pip" x="-1" y="95" width="10" height="10" />
+                                <rect class="octagon-pip" x="27" y="27" width="10" height="10" />
+                            </g>
+                        </g>
+                        <!-- Inner ring of square "pixels", spinning the other way -->
+                        <g class="octagon-inner">
+                            <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(143,233,255,0.5)" stroke-width="5"
+                                stroke-dasharray="5 7" />
+                        </g>
+                    </svg>
+                    <div class="photo-circle">
+                        <img src="Avatar.png" alt="Avatar de Abraham Román con cascos y consola">
+
+                    </div>
+                </div>
+                <h2 class="about-title" id="aboutTitle">Sobre mí</h2>
+                <div class="main-role">
+                    <h3>Rol principal</h3>
+                    <div class="main-role-icons">
+                        <div class="tech">
+                            <div class="tech-tile"><i class="devicon-unity-plain"></i></div><span
+                                class="tech-label">Unity</span>
+                        </div>
+                        <div class="tech">
+                            <div class="tech-tile"><i class="devicon-csharp-plain"></i></div><span
+                                class="tech-label">C#</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Next Button: give the next section id="proyectos" and it will scroll there -->
+                <div class="about-next about-next--center">
+                    <button class="start-btn" id="nextBtn" onclick="goToNextSection()">Next</button>
+                </div>
+            </div>
+
+            <!-- Estudios -->
+            <div class="about-studies reveal">
+                <h2 class="about-heading">Estudios</h2>
+                <ol class="timeline">
+                    <li class="exp-item">
+                        <div class="exp-card">
+                            <div class="exp-title">Máster en Diseño y Desarrollo de Videojuegos</div>
+                            <div class="exp-meta">Escuela Superior de Videojuegos y Arte Digital de Málaga</div>
+                            <div class="exp-date">Octubre 2025 – Diciembre 2026</div>
+                        </div>
+                    </li>
+                    <li class="exp-item">
+                        <div class="exp-card">
+                            <div class="exp-title">Técnico Experto en Creación de Videojuegos</div>
+                            <div class="exp-meta">Escuela Superior de Videojuegos y Arte Digital de Málaga</div>
+                            <div class="exp-date">Septiembre 2023 – Junio 2025</div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Experiencia laboral (a la altura de SOBRE MÍ) -->
+            <div class="about-exp reveal">
+                <h2 class="about-heading">Experiencia laboral</h2>
+                <ol class="timeline">
+                    <li class="exp-item">
+                        <div class="exp-card">
+                            <div class="exp-title">Júpiter Cartoon Factory</div>
+                            <div class="exp-meta">Game Programmer · Marzo 2025 – Junio 2025</div>
+                            <ul class="exp-details">
+                                <li>Diseño de Loop de Juego</li>
+                                <li>Creación de algoritmos de pathfinding</li>
+                                <li>Desarrollo Modo Multijugador</li>
+                            </ul>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Habilidades técnicas -->
+            <div class="about-skills reveal">
+                <h2 class="about-heading">Habilidades técnicas</h2>
+                <div class="skill-tree">
+                    <svg viewBox="0 0 300 310" aria-hidden="true">
+                        <line x1="150" y1="26" x2="150" y2="122" />
+                        <line x1="50" y1="122" x2="250" y2="122" />
+                        <line x1="150" y1="122" x2="150" y2="232" />
+                        <polyline points="50,232 50,188 250,188 250,232" />
+                    </svg>
+                    <div class="tech" style="grid-column: 2">
+                        <div class="tech-tile"><i class="devicon-unity-plain"></i></div><span
+                            class="tech-label">Unity</span>
+                    </div>
+                    <div class="tech" style="grid-column: 1; grid-row: 2">
+                        <div class="tech-tile"><i class="devicon-git-plain"></i></div><span
+                            class="tech-label">Git</span>
+                    </div>
+                    <div class="tech" style="grid-column: 2; grid-row: 2">
+                        <div class="tech-tile"><i class="devicon-csharp-plain"></i></div><span
+                            class="tech-label">C#</span>
+                    </div>
+                    <div class="tech" style="grid-column: 3; grid-row: 2">
+                        <div class="tech-tile"><i class="devicon-photoshop-plain"></i></div><span
+                            class="tech-label">Photoshop</span>
+                    </div>
+                    <div class="tech" style="grid-column: 1; grid-row: 3">
+                        <div class="tech-tile"><i class="devicon-unrealengine-original"></i></div><span
+                            class="tech-label">Unreal</span>
+                    </div>
+                    <div class="tech" style="grid-column: 2; grid-row: 3">
+                        <div class="tech-tile"><i class="devicon-godot-plain"></i></div><span
+                            class="tech-label">Godot</span>
+                    </div>
+                    <div class="tech" style="grid-column: 3; grid-row: 3">
+                        <div class="tech-tile"><i class="devicon-blender-original"></i></div><span
+                            class="tech-label">Blender</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Next Button (stacked layouts only; desktop uses the one under Rol principal) -->
+            <div class="about-next about-next--end">
+                <button class="start-btn" onclick="goToNextSection()">Next</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ===== TERCERA SECCIÓN (destino del botón NEXT) ===== -->
+    <section class="projects" id="proyectos" aria-labelledby="projectsTitle">
+        <div class="projects-inner">
+            <h2 class="projects-title reveal" id="projectsTitle">Mis Proyectos</h2>
+
+            <!-- Proyecto destacado: vídeo a la izquierda, título y descripción a la derecha -->
+            <div class="reveal">
+                <article class="game-window game-featured">
+                    <div class="game-media">
+                        <video src="Sacramento/Sacramento-Showcase.mp4" autoplay muted loop playsinline
+                            aria-label="Gameplay de Sacramento"></video>
+                    </div>
+                    <div class="featured-info">
+                        <div class="featured-tags">
+                            <span class="featured-tag">TFM / Velvet Studios</span>
+                            <span class="featured-tag featured-tag--dev">En desarrollo</span>
+                        </div>
+                        <h3>
+                            <img class="featured-logo" src="Sacramento/SACRAMENTO_TEXT.png" alt="Sacramento">
+                        </h3>
+                        <div class="featured-desc">
+                            <p><span class="desc-label">Tipo de juego</span>
+                                <span class="hl">Action RPG 3D</span> en <span class="hl">3ª persona</span> con un
+                                combate <span class="hl">"hit &amp; roll"</span> inspirado en los
+                                <span class="hl">souls-like</span>: exigente, pero accesible. Estética anime con
+                                raíces en la <span class="hl">cultura tradicional española</span> y la fantasía
+                                medieval oscura.</p>
+                            <p><span class="desc-label">Narrativa</span>
+                                Cuatro reinos en guerra se unen ante la <span class="hl">Vápula</span>, una energía
+                                oscura que lo corrompe todo. Para frenarla ofrecen
+                                <span class="hl">sacrificios</span>… y este año el tributo elegido
+                                <span class="hl">eres tú</span>. Sobrevive a las tierras devastadas, reúne aliados y
+                                usa la propia Vápula para hacerte más fuerte.</p>
+                        </div>
+                        <a class="featured-more" href="Sacramento/index.html" aria-label="Ver más sobre Sacramento">
+                            Ver más
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Cuadrícula de 4 proyectos -->
+
+            <div class="games-grid reveal" id="mas-juegos">
+                <article class="game-window game-card game-card--curse">
+                    <div class="game-media">
+                        <img class="card-preview" src="EndlessCurse/Poblado.png"
+                            alt="El poblado de Endless Curse">
+                        <video class="card-video" src="EndlessCurse/EndlessCurse_Gameplay.mp4" muted
+                            playsinline preload="none" data-start="0" aria-hidden="true"></video>
+                        <img class="card-logo card-logo--square" src="EndlessCurse/img/logo.png" alt="" aria-hidden="true">
+                        <div class="card-tags">
+                            <span class="card-tag">TFG / Solo Dev</span>
+                        </div>
+                    </div>
+                    <div class="game-titlebar">
+                        <h3 class="card-title">Endless Curse</h3>
+                        <div class="card-hover-bar">
+                            <ul class="card-keywords" aria-label="Palabras clave">
+                                <li>Action RPG</li>
+                                <li>Bucle temporal</li>
+                                <li>Low Poly</li>
+                            </ul>
+                            <a class="featured-more featured-more--sm" href="EndlessCurse/index.html"
+                                aria-label="Ver más sobre Endless Curse">
+                                Ver más
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                <!-- Interactive card: preview image -> looping video + logo + keywords on hover.
+                     Theme colours come from a modifier class (game-card--goblin).
+                     data-start (seconds) sets where the video begins and where it loops back to. -->
+                <article class="game-window game-card game-card--goblin">
+                    <div class="game-media">
+                        <img class="card-preview" src="GoblinInvasion/img/preview.png"
+                            alt="Gameplay de Goblin Invasion">
+                        <video class="card-video" src="GoblinInvasion/GoblinInvasion_Gameplay.mp4" muted
+                            playsinline preload="none" data-start="6" aria-hidden="true"></video>
+                        <img class="card-logo" src="GoblinInvasion/img/logo.png" alt="" aria-hidden="true">
+                        <div class="card-tags">
+                            <span class="card-tag">Solo Dev</span>
+                        </div>
+                    </div>
+                    <div class="game-titlebar">
+                        <h3 class="card-title">Goblin Invasion</h3>
+                        <div class="card-hover-bar">
+                            <ul class="card-keywords" aria-label="Palabras clave">
+                                <li>Endless Runner</li>
+                                <li>Pixel Art</li>
+                                <li>Horda</li>
+                            </ul>
+                            <a class="featured-more featured-more--sm" href="GoblinInvasion/index.html"
+                                aria-label="Ver más sobre Goblin Invasion">
+                                Ver más
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                <article class="game-window game-card game-card--human">
+                    <div class="game-media">
+                        <img class="card-preview" src="HumanRevenge/GeneralPNG.png"
+                            alt="Gameplay de Human Revenge">
+                        <video class="card-video" src="HumanRevenge/Gameplay_HumanRevenge.mp4" muted
+                            playsinline preload="none" data-start="0" aria-hidden="true"></video>
+                        <img class="card-logo" src="HumanRevenge/img/logo.png" alt="" aria-hidden="true">
+                        <div class="card-tags">
+                            <span class="card-tag">Solo Dev</span>
+                        </div>
+                    </div>
+                    <div class="game-titlebar">
+                        <h3 class="card-title">Human Revenge</h3>
+                        <div class="card-hover-bar">
+                            <ul class="card-keywords" aria-label="Palabras clave">
+                                <li>Twin-Stick Shooter</li>
+                                <li>Oleadas</li>
+                                <li>Tower Defense</li>
+                            </ul>
+                            <a class="featured-more featured-more--sm" href="HumanRevenge/index.html"
+                                aria-label="Ver más sobre Human Revenge">
+                                Ver más
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                <article class="game-window game-card game-card--yeti">
+                    <div class="game-media">
+                        <img class="card-preview" src="Yetilette/img/shot2.png" alt="Pelea contra el jefe Yeti en Yetilette">
+                        <video class="card-video" src="Yetilette/Yetilette_Gameplay.mp4" muted
+                            playsinline preload="none" data-start="0" aria-hidden="true"></video>
+                        <img class="card-logo" src="Yetilette/img/logo.png" alt="" aria-hidden="true">
+                        <div class="card-tags card-tags--stack">
+                            <span class="card-tag">FullBacon Games</span>
+                            <span class="card-tag card-tag--award">★ Favorito del público</span>
+                        </div>
+                    </div>
+                    <div class="game-titlebar">
+                        <h3 class="card-title">Yetilette</h3>
+                        <div class="card-hover-bar">
+                            <ul class="card-keywords" aria-label="Palabras clave">
+                                <li>Minijuegos</li>
+                                <li>Game Jam</li>
+                                <li>3D / 2D</li>
+                            </ul>
+                            <a class="featured-more featured-more--sm" href="Yetilette/index.html"
+                                aria-label="Ver más sobre Yetilette">
+                                Ver más
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M13 6l6 6-6 6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Proyecto de cierre: mismo formato que Sacramento pero en espejo y más pequeño.
+                 Interactiva como las tarjetas pequeñas (game-card): imagen fija; al pasar el ratón
+                 se ensancha y reproduce el vídeo en bucle. -->
+            <div class="reveal">
+                <article class="game-window game-card game-featured game-featured--closing">
+                    <div class="game-media">
+                        <img class="card-preview" src="Nightmar-T/img/preview.png"
+                            alt="Nightmar-T se presenta en la pantalla de la pistola de códigos de barras">
+                        <video class="card-video" src="Nightmar-T/Nightmar-T_Gameplay.mp4" muted playsinline
+                            preload="none" data-start="0" aria-hidden="true"></video>
+                    </div>
+                    <div class="featured-info">
+                        <div class="featured-tags">
+                            <span class="featured-tag">Solo Dev</span>
+                            <span class="featured-tag featured-tag--dev">En desarrollo</span>
+                        </div>
+                        <h3>
+                            <img class="featured-logo" src="Nightmar-T/img/logo.png" alt="Nightmar-T">
+                        </h3>
+                        <div class="featured-desc">
+                            <p><span class="desc-label">Tipo de juego</span>
+                                <span class="hl">Puzles en 1ª persona</span> con <span class="hl">tensión y
+                                    humor</span>, ambientado en un supermercado. Diseñado desde mi experiencia en el
+                                <span class="hl">sector servicios</span>: escanear, etiquetar y cuadrar precios se
+                                convierten en mecánicas.</p>
+                            <p><span class="desc-label">Narrativa</span>
+                                Tras un fin de semana de horas extra, el dueño del súper despierta en una versión
+                                <span class="hl">post-apocalíptica</span> de su tienda. Con una pistola de códigos de
+                                barras y la IA <span class="hl">Nightmar-T</span>, debe encontrar 5 baterías y
+                                escapar.</p>
+                        </div>
+                        <a class="featured-more" href="Nightmar-T/index.html" aria-label="Ver más sobre Nightmar-T">
+                            Ver más
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== MÁS PROYECTOS + CONTACTO ===== -->
+    <section class="extras" id="contacto" aria-label="Más proyectos y contacto">
+        <div class="extras-inner">
+
+            <!-- Más proyectos: enlace a itch.io -->
+            <div class="extras-block reveal">
+                <h2 class="about-heading">Más Proyectos</h2>
+                <div class="extra-panel more-panel">
+                    <div class="more-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path fill-rule="evenodd"
+                                d="M6 7h12a4 4 0 0 1 4 4v3a3 3 0 0 1-5.4 1.8L15 14H9l-1.6 1.8A3 3 0 0 1 2 14v-3a4 4 0 0 1 4-4zm1 3v1.5H5.5V13H7v1.5h1.5V13H10v-1.5H8.5V10H7zm9 .5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm2.5 1.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                        </svg>
+                    </div>
+                    <div class="more-text">
+                        <h3>¿Quieres ver más juegos que he hecho?</h3>
+                        <p>Game Jams, prototipos y proyectos personales: encontrarás el resto de mi trabajo, listo
+                            para jugar, en mi página de <strong>itch.io</strong>.</p>
+                        <a class="itch-btn" href="https://abyogre.itch.io" target="_blank" rel="noopener">
+                            Visitar itch.io
+                            <svg viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M5 12h14M13 6l6 6-6 6" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contacto -->
+            <div class="extras-block reveal">
+                <h2 class="about-heading">Contacto</h2>
+                <div class="extra-panel">
+                    <ul class="contact-list">
+                        <li>
+                            <a class="contact-item" href="tel:+34639032334">
+                                <span class="contact-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.37 2.33.57 3.6.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" />
+                                    </svg>
+                                </span>
+                                <span>
+                                    <span class="contact-label">Teléfono</span>
+                                    <span class="contact-value">639 03 23 34</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <!-- Click copies the address (see script); mailto stays as a fallback -->
+                            <a class="contact-item" href="mailto:abyogrev@gmail.com" data-copy="abyogrev@gmail.com">
+                                <span class="contact-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z" />
+                                    </svg>
+                                </span>
+                                <span>
+                                    <span class="contact-label">Correo · clic para copiar</span>
+                                    <span class="contact-value">abyogrev@gmail.com</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-item" href="https://x.com/abyogre" target="_blank" rel="noopener">
+                                <span class="contact-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                                    </svg>
+                                </span>
+                                <span>
+                                    <span class="contact-label">Twitter / X</span>
+                                    <span class="contact-value">@abyogre</span>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="contact-item" href="https://www.linkedin.com/in/abraham-rom%C3%A1n-g%C3%B3mez-2b6ab4355/" target="_blank" rel="noopener">
+                                <span class="contact-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24">
+                                        <path
+                                            d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1a3.7 3.7 0 0 1 3.4-1.9c3.6 0 4.3 2.4 4.3 5.5zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.5V9h3.6z" />
+                                    </svg>
+                                </span>
+                                <span>
+                                    <span class="contact-label">LinkedIn</span>
+                                    <span class="contact-value">Abraham Román Gómez</span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <footer class="site-footer">© 2026 Abraham Román · Game Developer Portfolio</footer>
+    </section>
+
+    <!-- Notification (e.g. "Correo copiado al portapapeles") -->
+    <div class="toast" id="toast" role="status" aria-live="polite">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 13l4 4L19 7" />
+        </svg>
+        <span class="toast-text"></span>
+    </div>
+
+    <script>
+
+        /* ============================================
+           INTRO — TYPED C# CODE, THEN NAME REVEAL
+           ============================================ */
+        const introCode = [
+            [['k', 'var '], ['', 'player = '], ['k', 'new '], ['t', 'Player'], ['', '();']],
+            [['', 'player.Name = '], ['s', '"Abraham Román"'], ['', ';']],
+            [['', 'player.'], ['f', 'LogIn'], ['', '();']],
+            [['ok', '> Access granted ✔']]
+        ];
+
+        function runIntro() {
+            const root = document.documentElement;
+            const codeEl = document.getElementById('heroCode');
+            if (!root.classList.contains('intro')) return;
+
+            const cursor = document.createElement('span');
+            cursor.className = 'cursor';
+            codeEl.appendChild(cursor);
+
+            // Flatten into a queue of [class, text] segments, with newlines between lines
+            const segments = [];
+            introCode.forEach((line, i) => {
+                line.forEach(seg => segments.push(seg));
+                if (i < introCode.length - 1) segments.push(['', '\n']);
+            });
+
+            const CHARS_PER_TICK = 2;
+            let segIndex = 0;
+            let charIndex = 0;
+            let span = null;
+
+            function tick() {
+                if (segIndex >= segments.length) {
+                    setTimeout(finish, 450);
+                    return;
+                }
+
+                const [cls, text] = segments[segIndex];
+                if (!span) {
+                    span = document.createElement('span');
+                    if (cls) span.className = cls;
+                    codeEl.insertBefore(span, cursor);
+                }
+
+                const chunk = text.slice(charIndex, charIndex + CHARS_PER_TICK);
+                span.textContent += chunk;
+                charIndex += chunk.length;
+
+                let delay = 24 + Math.random() * 18;
+                if (charIndex >= text.length) {
+                    if (text === '\n') delay = 130;
+                    // "Processing" pause before the login result appears
+                    const next = segments[segIndex + 1];
+                    if (next && next[0] === 'ok') delay = 450;
+                    segIndex++;
+                    charIndex = 0;
+                    span = null;
+                }
+                setTimeout(tick, delay);
+            }
+
+            function finish() {
+                codeEl.classList.add('hide');
+                setTimeout(() => {
+                    codeEl.remove();
+                    root.classList.add('intro-done');
+                    // Start rotating roles once the carousel has slid in
+                    setTimeout(startCarousel, 1350);
+                }, 400);
+            }
+
+            setTimeout(tick, 300);
+        }
+
+        runIntro();
+
+        /* ============================================
+           PROJECT CARDS: play the video while hovered / focused
+           ============================================ */
+        document.querySelectorAll('.game-card').forEach(card => {
+            const video = card.querySelector('.card-video');
+            if (!video) return;
+
+            const rewind = () => { video.currentTime = Number(video.dataset.start) || 0; };
+            const start = () => {
+                if (window.matchMedia('(hover: none)').matches) return;
+                // With preload="none" the seek only sticks once the metadata has loaded
+                if (video.readyState >= 1) rewind();
+                else video.addEventListener('loadedmetadata', rewind, { once: true });
+                video.play().catch(() => { });
+            };
+            const stop = () => {
+                if (card.matches(':hover, :focus-within')) return;
+                video.pause();
+                card.classList.remove('is-playing');
+            };
+
+            video.addEventListener('playing', () => card.classList.add('is-playing'));
+            // Loop back to data-start (not 0) so intros/menus at the start of the clip are skipped
+            video.addEventListener('ended', () => {
+                video.currentTime = Number(video.dataset.start) || 0;
+                video.play().catch(() => { });
+            });
+            card.addEventListener('mouseenter', start);
+            card.addEventListener('mouseleave', stop);
+            card.addEventListener('focusin', () => { if (video.paused) start(); });
+            card.addEventListener('focusout', () => setTimeout(stop));
+        });
+
+        /* The whole card opens its "Ver más" link, not just the button */
+        document.querySelectorAll('.game-card').forEach(card => {
+            const link = card.querySelector('.featured-more[href]');
+            if (!link) return;
+
+            card.addEventListener('click', e => {
+                if (e.target.closest('a')) return; // the button itself already navigates
+                // Ctrl/Cmd/middle click: open in a new tab like a normal link
+                if (e.ctrlKey || e.metaKey) window.open(link.href, '_blank');
+                else window.location.href = link.href;
+            });
+            card.addEventListener('auxclick', e => {
+                if (e.button === 1 && !e.target.closest('a')) window.open(link.href, '_blank');
+            });
+        });
+
+        /* ============================================
+           ROLE CAROUSEL
+           ============================================ */
+        const roles = [
+            'UI/UX Designer',
+            'System Programmer',
+            'System Designer',
+            'Gameplay Programmer',
+            'Level Designer',
+            'UI/UX Programmer'
+        ];
+
+        let ITEM_WIDTH = 450;
+        let currentIndex = 1; // Start with System Programmer in center
+        const track = document.getElementById('roleTrack');
+        const roleCarousel = document.getElementById('roleCarousel');
+        let isAnimating = false;
+
+        // 450px per role on wide screens; on narrow ones a role fills the visible carousel
+        function updateItemWidth() {
+            ITEM_WIDTH = Math.min(450, roleCarousel.clientWidth || 450);
+            track.style.setProperty('--item-w', ITEM_WIDTH + 'px');
+        }
+
+        updateItemWidth();
+        window.addEventListener('resize', () => {
+            if (isAnimating) return;
+            updateItemWidth();
+            buildTrack();
+        });
+
+        function getRole(index) {
+            return roles[((index % roles.length) + roles.length) % roles.length];
+        }
+
+        function buildTrack() {
+            track.innerHTML = '';
+            // Build 5 items: [i-2] [i-1] [i] [i+1] [i+2]
+            for (let offset = -2; offset <= 2; offset++) {
+                const item = document.createElement('div');
+                item.className = 'role-item';
+                if (offset === 0) item.classList.add('active');
+                item.textContent = getRole(currentIndex + offset);
+                track.appendChild(item);
+            }
+            // Position track: center item (index 2, offset 0) should be at center
+            // left:50% already set, so translateX to shift the center item to screen center
+            // Center item is the 3rd item (index 2), so offset is 2 * ITEM_WIDTH
+            track.style.transform = `translateX(${-(2 * ITEM_WIDTH + ITEM_WIDTH / 2)}px)`;
+        }
+
+        buildTrack();
+
+        const stickLeft = document.getElementById('stickLeft');
+        const stickRight = document.getElementById('stickRight');
+
+        // Briefly tilt a joystick, as if the player pushed it
+        function pushStick(stick) {
+            stick.classList.add('pushed');
+            setTimeout(() => stick.classList.remove('pushed'), 250);
+        }
+
+        // dir: +1 = next role (track slides left), -1 = previous role
+        function moveCarousel(dir) {
+            if (isAnimating) return;
+            isAnimating = true;
+            pushStick(dir > 0 ? stickRight : stickLeft);
+
+            track.classList.add('animating');
+            const currentOffset = 2 * ITEM_WIDTH + ITEM_WIDTH / 2;
+            track.style.transform = `translateX(${-(currentOffset + dir * ITEM_WIDTH)}px)`;
+
+            // Also update active classes for the transition
+            const items = track.querySelectorAll('.role-item');
+            items.forEach((item, i) => {
+                item.classList.toggle('active', i === 2 + dir); // New center
+            });
+
+            setTimeout(() => {
+                track.classList.remove('animating');
+                currentIndex = (currentIndex + dir + roles.length) % roles.length;
+                buildTrack();
+                isAnimating = false;
+            }, 700);
+        }
+
+        const advanceCarousel = () => moveCarousel(1);
+
+        // Auto-advance every 3 seconds
+        let carouselInterval;
+
+        function startCarousel() {
+            clearInterval(carouselInterval);
+            carouselInterval = setInterval(advanceCarousel, 3000);
+        }
+
+        // With the intro running, the carousel starts when it finishes
+        if (!document.documentElement.classList.contains('intro')) startCarousel();
+
+        // Pause while the pointer is over the selector (roles or sticks)
+        const roleSelect = document.getElementById('roleSelect');
+        roleSelect.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+        roleSelect.addEventListener('mouseleave', startCarousel);
+
+        stickLeft.addEventListener('click', () => moveCarousel(-1));
+        stickRight.addEventListener('click', () => moveCarousel(1));
+
+        // Keyboard arrows also move the selector while the cover is on screen
+        document.addEventListener('keydown', e => {
+            if (!document.documentElement.classList.contains('intro-done') &&
+                document.documentElement.classList.contains('intro')) return;
+            if (window.scrollY > window.innerHeight / 2) return;
+            if (e.key === 'ArrowLeft') moveCarousel(-1);
+            if (e.key === 'ArrowRight') moveCarousel(1);
+        });
+
+        // NEXT buttons: scroll to the following section once it exists
+        /* ============================================
+           TOP BAR SHORTCUTS: highlight the section on screen
+           ============================================ */
+        const navDots = [...document.querySelectorAll('.nav-dot')];
+        const navTargets = navDots.map(dot => document.querySelector(dot.getAttribute('href')));
+
+        function updateActiveDot() {
+            const probe = window.innerHeight * 0.35;
+            let current = 0;
+            navTargets.forEach((target, i) => {
+                if (target && target.getBoundingClientRect().top <= probe) current = i;
+            });
+            // At the very bottom the short contact section can't reach the probe line
+            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+                current = navTargets.length - 1;
+            }
+            navDots.forEach((dot, i) => dot.classList.toggle('active', i === current));
+        }
+
+        window.addEventListener('scroll', updateActiveDot, { passive: true });
+        window.addEventListener('resize', updateActiveDot);
+        updateActiveDot();
+
+        /* ============================================
+           COPY TO CLIPBOARD (e-mail) + notification
+           ============================================ */
+        const toast = document.getElementById('toast');
+        let toastTimer;
+
+        function showToast(message) {
+            toast.querySelector('.toast-text').textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2600);
+        }
+
+        function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text);
+            }
+            // Fallback for old browsers / non-secure contexts
+            return new Promise((resolve, reject) => {
+                const area = document.createElement('textarea');
+                area.value = text;
+                area.setAttribute('readonly', '');
+                area.style.position = 'fixed';
+                area.style.opacity = '0';
+                document.body.appendChild(area);
+                area.select();
+                const ok = document.execCommand('copy');
+                area.remove();
+                if (ok) resolve(); else reject();
+            });
+        }
+
+        document.querySelectorAll('[data-copy]').forEach(link => {
+            link.addEventListener('click', e => {
+                e.preventDefault();
+                copyText(link.dataset.copy)
+                    .then(() => showToast('Correo copiado al portapapeles'))
+                    // If copying is blocked, open the mail app instead
+                    .catch(() => { window.location.href = link.href; });
+            });
+        });
+
+        function goToNextSection() {
+            document.getElementById('proyectos')?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* ============================================
+           HERO — PROJECT PREVIEWS STRIP
+           ============================================ */
+        // Duplicate the thumbnails once so the marquee loops without a gap.
+        // Clones are hidden from screen readers and the tab order.
+        const previewTrack = document.getElementById('previewTrack');
+        if (previewTrack) {
+            [...previewTrack.children].forEach(item => {
+                const clone = item.cloneNode(true);
+                clone.dataset.clone = '';
+                clone.setAttribute('aria-hidden', 'true');
+                clone.querySelector('a').tabIndex = -1;
+                previewTrack.appendChild(clone);
+            });
+        }
+
+        /* ============================================
+           SOBRE MÍ — REVEAL ON SCROLL
+           ============================================ */
+        const revealEls = document.querySelectorAll('.reveal');
+        if ('IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                });
+            }, { threshold: 0.15 });
+            revealEls.forEach((el, i) => {
+                el.style.transitionDelay = `${(i % 3) * 0.12}s`;
+                revealObserver.observe(el);
+            });
+        } else {
+            revealEls.forEach(el => el.classList.add('visible'));
+        }
+    </script>
+
+</body>
+
+</html>

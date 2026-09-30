@@ -1,0 +1,239 @@
+/* =========================================================
+   Goblin Invasion — CSS personalizado para itch.io
+   Replica el estilo de GoblinInvasion/index.html + css/juego.css.
+   Pegar en: Edit theme → pestaña CSS (hay que pedir acceso a itch.io, ver PASOS.md).
+   Los selectores (#wrapper, .inner_column, .formatted_description...) son los de la
+   plantilla de itch; si alguno no aplica, compruébalo con F12 → Inspeccionar.
+   ========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap');
+
+:root {
+    --accent: #7dff8a;
+    --accent-2: #2fbf5a;
+    --accent-rgb: 125, 255, 138;
+    --bg: #07140b;
+    --panel: rgba(8, 26, 14, 0.82);
+    --text: #e4f5e7;
+    --text-dim: rgba(228, 245, 231, 0.7);
+    --line: rgba(125, 255, 138, 0.3);
+    --bc: rgba(125, 255, 138, 0.45);
+}
+
+/* ===== Fondo fijo (como .game-bg) ===== */
+#wrapper {
+    background-attachment: fixed !important;
+    background-size: cover !important;
+    background-position: center !important;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ===== Columna principal = ventana pixel ===== */
+.inner_column {
+    background: var(--panel) !important;
+    backdrop-filter: blur(6px);
+    box-shadow:
+        inset 3px 3px 0 rgba(255, 255, 255, 0.06),
+        inset -3px -3px 0 rgba(0, 0, 0, 0.3),
+        0 -3px 0 0 var(--bc),
+        0 3px 0 0 var(--bc),
+        -3px 0 0 0 var(--bc),
+        3px 0 0 0 var(--bc),
+        0 -9px 0 -3px var(--bc),
+        0 9px 0 -3px var(--bc),
+        -9px 0 0 -3px var(--bc),
+        9px 0 0 -3px var(--bc),
+        8px 8px 0 0 rgba(0, 0, 0, 0.35) !important;
+    transition: box-shadow 0.2s ease;
+}
+
+/* Banner (logo) con la misma sombra que .game-logo */
+#header img {
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
+}
+
+/* ===== Descripción ===== */
+.formatted_description {
+    color: var(--text-dim);
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+/* Primer párrafo: las etiquetas (Solo Dev, Endless Runner 2D, Pixel Art) */
+.formatted_description > p:first-child {
+    text-align: center;
+}
+
+.formatted_description > p:first-child em {
+    display: inline-block;
+    margin: 4px;
+    padding: 6px 14px;
+    background: #000;
+    border: 1px solid rgba(var(--accent-rgb), 0.45);
+    border-radius: 4px;
+    font-style: normal;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #d2ffd8;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+}
+
+/* Palabras resaltadas (.hl) */
+.formatted_description strong {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* Títulos de sección: cuadrado pixel + línea (como .section-title) */
+.formatted_description h2 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 48px 0 18px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.formatted_description h2::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+}
+
+.formatted_description h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--line), transparent);
+}
+
+/* Tarjetas de mecánicas (h3 + p) */
+.formatted_description h3 {
+    margin: 24px 0 6px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+/* "Mi papel": la cadena de roles */
+.formatted_description h2:first-of-type + p {
+    text-align: center;
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Ficha técnica: lista en 2 columnas con etiqueta verde encima */
+.formatted_description ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+    padding: 6px 24px;
+    list-style: none;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+}
+
+.formatted_description ul li {
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--line);
+    color: var(--text);
+}
+
+.formatted_description ul li strong {
+    display: block;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.formatted_description hr {
+    border: none;
+    height: 1px;
+    margin: 36px 0;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+}
+
+/* ===== Botón de descarga (como .download-btn) ===== */
+.button,
+.buy_btn,
+.download_btn {
+    background: linear-gradient(180deg, #ffffff -40%, var(--accent) 45%, var(--accent-2) 130%) !important;
+    color: var(--bg) !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-family: 'Chakra Petch', sans-serif !important;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: none !important;
+    box-shadow:
+        0 4px 0 var(--accent-2),
+        0 6px 18px rgba(var(--accent-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.button:hover,
+.buy_btn:hover,
+.download_btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 0 var(--accent-2),
+        0 10px 26px rgba(var(--accent-rgb), 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45) !important;
+}
+
+/* ===== Capturas y vídeo (como las miniaturas de la galería) ===== */
+.screenshot_list img,
+.video_embed {
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.35);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.screenshot_list a:hover img {
+    border-color: var(--accent);
+    box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.5);
+    transform: translateY(-2px);
+}
+
+/* ===== Tabla "More information" ===== */
+.game_info_panel_widget {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--line);
+}
+
+.game_info_panel_widget td:first-child {
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+/* ===== Móvil ===== */
+@media (max-width: 800px) {
+    .formatted_description ul {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .formatted_description h2 {
+        font-size: 1.2rem;
+    }
+}

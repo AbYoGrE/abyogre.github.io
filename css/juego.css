@@ -1,0 +1,867 @@
+/* =========================================================
+   GAME PAGE TEMPLATE (shared by every game page)
+   Each page sets its own colours on <body> and its background on .game-bg:
+     <body style="--accent: #ff5fc8; --accent-2: #b44dff; --accent-rgb: 255, 95, 200;">
+   Optionally also the dark base tones (--bg, --shade-rgb, --panel, --text, --text-dim, --tag-text, --stick-fill).
+     <div class="game-bg" style="background-image: url('img/fondo.png');"></div>
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    --accent: #8fe9ff;
+    --accent-2: #5ee7b5;
+    --accent-rgb: 143, 233, 255;
+    --panel: rgba(16, 10, 30, 0.72);
+    --text: #ece4f5;
+    --text-dim: rgba(236, 228, 245, 0.7);
+    --bg: #0c0816;
+    --shade-rgb: 8, 4, 16;
+    --tag-text: #f3d6ff;
+    --stick-fill: #0a0614;
+    --line: rgba(var(--accent-rgb), 0.3);
+
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    overflow-x: hidden;
+}
+
+img,
+video {
+    max-width: 100%;
+}
+
+/* ===== Darkened background image (fixed, behind everything) ===== */
+.game-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    filter: brightness(0.3) saturate(0.9) blur(2px);
+    transform: scale(1.03); /* hide the blurred edges */
+}
+
+.game-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 50% 20%, transparent 0%, rgba(var(--shade-rgb), 0.55) 70%),
+        linear-gradient(180deg, rgba(var(--shade-rgb), 0.2) 0%, rgba(var(--shade-rgb), 0.85) 100%);
+}
+
+/* ===== Top bar ===== */
+.game-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px;
+    background: linear-gradient(180deg, rgba(var(--shade-rgb), 0.85), transparent);
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--text-dim);
+    transition: color 0.2s ease;
+}
+
+.back-link svg {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.2s ease;
+}
+
+.back-link:hover {
+    color: var(--accent);
+}
+
+.back-link:hover svg {
+    transform: translateX(-4px);
+}
+
+.game-topbar .portfolio-mark {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+/* "Descargar juego": same style as the portfolio's "Descargar CV", in the game's accent colours */
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #ffffff -40%, var(--accent) 45%, var(--accent-2) 130%);
+    color: var(--bg);
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow:
+        0 4px 0 var(--accent-2),
+        0 6px 18px rgba(var(--accent-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.download-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+}
+
+.download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 6px 0 var(--accent-2),
+        0 10px 26px rgba(var(--accent-rgb), 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.download-btn:active {
+    transform: translateY(3px);
+    box-shadow:
+        0 1px 0 var(--accent-2),
+        0 2px 8px rgba(var(--accent-rgb), 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.download-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+/* ===== Layout ===== */
+.game-page {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 20px 32px 80px;
+}
+
+.game-section {
+    margin-top: 64px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 22px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+/* Small pixel square before every title */
+.section-title::before {
+    content: '';
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+    background: var(--accent);
+    box-shadow: 0 0 12px var(--accent);
+}
+
+.section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--line), transparent);
+}
+
+/* ===== Hero: logo + tags + tagline ===== */
+.game-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 24px;
+}
+
+.game-logo {
+    width: min(620px, 100%);
+    height: auto;
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.7));
+}
+
+.game-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.game-tag {
+    padding: 6px 14px;
+    background: #000;
+    border: 1px solid rgba(var(--accent-rgb), 0.45);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--tag-text);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+}
+
+.game-tag--dev {
+    background: #5c0f1c;
+    border-color: rgba(255, 110, 130, 0.45);
+    color: #ffd9de;
+}
+
+/* Award badge, on its own row under the tags */
+.game-award {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.game-tag--award {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(180deg, #ffe27a 0%, #e0a92a 100%);
+    border-color: #fff1b8;
+    color: #3a2600;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5), 0 0 18px rgba(255, 210, 90, 0.35);
+}
+
+.game-tagline {
+    max-width: 720px;
+    margin-top: 22px;
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text-dim);
+}
+
+/* Highlighted words inside any text */
+.hl {
+    color: var(--accent);
+    font-weight: 600;
+}
+
+/* ===== Retro pixel windows (same look as the portfolio) ===== */
+.pixel-window {
+    --px: 3px;
+    --bc: rgba(var(--accent-rgb), 0.45);
+    --pixel-border:
+        0 calc(-1 * var(--px)) 0 0 var(--bc),
+        0 var(--px) 0 0 var(--bc),
+        calc(-1 * var(--px)) 0 0 0 var(--bc),
+        var(--px) 0 0 0 var(--bc),
+        0 calc(-3 * var(--px)) 0 calc(-1 * var(--px)) var(--bc),
+        0 calc(3 * var(--px)) 0 calc(-1 * var(--px)) var(--bc),
+        calc(-3 * var(--px)) 0 0 calc(-1 * var(--px)) var(--bc),
+        calc(3 * var(--px)) 0 0 calc(-1 * var(--px)) var(--bc);
+    --bevel: inset 3px 3px 0 rgba(255, 255, 255, 0.06), inset -3px -3px 0 rgba(0, 0, 0, 0.3);
+    --drop: 8px 8px 0 0 rgba(0, 0, 0, 0.35);
+    --glow-extra: 0 0 0 transparent;
+    background: var(--panel);
+    box-shadow: var(--bevel), var(--pixel-border), var(--drop), var(--glow-extra);
+    backdrop-filter: blur(6px);
+    transition: box-shadow 0.2s ease;
+}
+
+.pixel-window:hover {
+    --bc: rgba(var(--accent-rgb), 0.85);
+    --glow-extra: 0 0 24px rgba(var(--accent-rgb), 0.2);
+}
+
+.text-block {
+    padding: 26px 30px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-dim);
+}
+
+.text-block p + p {
+    margin-top: 14px;
+}
+
+/* ===== My roles: names joined by nodes and lines ===== */
+.roles-chain {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    row-gap: 18px;
+    list-style: none;
+}
+
+.roles-chain li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #fff;
+}
+
+/* Diamond node before each role */
+.roles-chain li::before {
+    content: '';
+    width: 9px;
+    height: 9px;
+    flex-shrink: 0;
+    transform: rotate(45deg);
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+}
+
+/* Line linking to the next role */
+.roles-chain li:not(:last-child)::after {
+    content: '';
+    width: 44px;
+    height: 2px;
+    margin: 0 12px 0 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    opacity: 0.7;
+}
+
+/* Last role of a wrapped row: hide its line but keep the space, so nothing reflows */
+.roles-chain li.row-end::after {
+    visibility: hidden;
+}
+
+/* ===== Tech sheet ===== */
+.spec-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 10px 30px;
+}
+
+.spec {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 0;
+    border-bottom: 1px dashed var(--line);
+}
+
+.spec:nth-child(odd) {
+    padding-right: 24px;
+}
+
+.spec dt {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.spec dd {
+    font-size: 1rem;
+    color: var(--text);
+}
+
+/* Red highlight, e.g. "Aún en desarrollo" */
+.spec dd.status-dev {
+    color: #ff5c73;
+    font-weight: 600;
+}
+
+/* Field still to be filled in */
+.spec dd.todo {
+    color: rgba(255, 255, 255, 0.35);
+    font-style: italic;
+}
+
+/* ===== Feature cards (gameplay pillars) ===== */
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 26px;
+    margin-top: 28px;
+}
+
+.feature {
+    padding: 22px 24px;
+}
+
+.feature h3 {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.feature h3 span {
+    color: var(--accent);
+    margin-right: 6px;
+}
+
+.feature p {
+    margin-top: 8px;
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--text-dim);
+}
+
+/* ===== Info slider (Ficha técnica, Estilo de juego, Narrativa...) ===== */
+.slider-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 26px;
+}
+
+.slider-tab {
+    position: relative;
+    padding: 10px 18px 12px;
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid var(--line);
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    cursor: pointer;
+    overflow: hidden;
+    transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.slider-tab:hover {
+    color: #fff;
+}
+
+.slider-tab.active {
+    color: #fff;
+    border-color: var(--accent);
+    background: rgba(var(--accent-rgb), 0.14);
+    box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.25);
+}
+
+/* Time left before the next automatic slide */
+.tab-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.slider-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+/* Padding leaves room for the pixel borders and drop shadows of the windows */
+.slider-viewport {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    padding: 14px;
+    margin: -14px;
+}
+
+.slider-track {
+    --slide-gap: 40px;
+    display: flex;
+    gap: var(--slide-gap);
+    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* Every slide is as tall as the tallest one, so the page doesn't jump */
+.info-slide {
+    flex: 0 0 100%;
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.6s ease;
+}
+
+.info-slide:not(.active) {
+    opacity: 0.25;
+}
+
+.info-slide > .pixel-window:only-child {
+    flex: 1;
+}
+
+.info-slide .features {
+    flex: 1;
+}
+
+/* ===== Gallery ===== */
+.gallery-stage-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.gallery-stage {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    overflow: hidden;
+}
+
+.gallery-stage img,
+.gallery-stage video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    animation: stage-in 0.35s ease;
+}
+
+@keyframes stage-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Caption + autoplay progress on top of the stage */
+.gallery-hud {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 30px 18px 14px;
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.8));
+    pointer-events: none;
+}
+
+.gallery-caption {
+    flex: 1;
+    font-family: 'Chakra Petch', sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+.gallery-counter {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.65rem;
+    color: var(--accent);
+}
+
+.gallery-toggle {
+    pointer-events: auto;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--line);
+    color: #fff;
+    cursor: pointer;
+}
+
+.gallery-toggle svg {
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
+}
+
+.gallery-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.gallery-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 3;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 8px var(--accent);
+}
+
+/* Videos: HUD moves to the top so it doesn't cover the native controls */
+.gallery-stage.is-video .gallery-hud {
+    top: 0;
+    bottom: auto;
+    padding: 14px 18px 30px;
+    background: linear-gradient(0deg, transparent, rgba(0, 0, 0, 0.8));
+}
+
+/* Thumbnails (add items in the HTML list; the JS reads them) */
+.gallery-thumbs {
+    display: flex;
+    gap: 14px;
+    margin-top: 22px;
+    padding: 6px 4px 10px;
+    list-style: none;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+}
+
+.gallery-thumbs li {
+    flex: 0 0 170px;
+    scroll-snap-align: start;
+}
+
+.gallery-thumbs button {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    padding: 0;
+    background: #000;
+    border: 2px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gallery-thumbs img,
+.gallery-thumbs video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+}
+
+.gallery-thumbs button:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+.gallery-thumbs button.active {
+    opacity: 1;
+    border-color: var(--accent);
+    box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.5);
+}
+
+/* Play badge on video thumbnails */
+.gallery-thumbs button[data-type="video"]::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0;
+    height: 0;
+    transform: translate(-40%, -50%);
+    border-left: 16px solid #fff;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.8));
+}
+
+/* ===== Joystick buttons (same as the portfolio's cover) ===== */
+.stick-btn {
+    flex-shrink: 0;
+    width: 84px;
+    height: 64px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    filter: drop-shadow(0 0 8px rgba(var(--accent-rgb), 0.55));
+    transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.stick-btn svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.stick-btn.right svg {
+    transform: scaleX(-1);
+}
+
+.stick-base {
+    fill: rgba(var(--shade-rgb), 0.75);
+    stroke: var(--accent);
+    stroke-width: 3;
+}
+
+.stick-cap {
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.stick-cap circle:first-child {
+    fill: var(--stick-fill);
+    stroke: var(--accent);
+    stroke-width: 2.5;
+}
+
+.stick-cap circle:last-child {
+    fill: none;
+    stroke: rgba(var(--accent-rgb), 0.5);
+    stroke-width: 1.5;
+}
+
+.stick-arrow {
+    fill: #fff;
+    transition: transform 0.18s ease;
+}
+
+.stick-btn:hover {
+    filter: drop-shadow(0 0 14px rgba(var(--accent-rgb), 0.9));
+    transform: scale(1.06);
+}
+
+.stick-btn:hover .stick-cap {
+    transform: translateX(-3px);
+}
+
+.stick-btn.pushed .stick-cap {
+    transform: translateX(-9px);
+}
+
+.stick-btn.pushed .stick-arrow {
+    transform: translateX(-3px);
+}
+
+/* ===== Footer ===== */
+.game-footer {
+    margin-top: 80px;
+    text-align: center;
+}
+
+.game-footer .back-link {
+    padding: 12px 22px;
+    border: 1px solid var(--line);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/* ===== Scroll reveal ===== */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 800px) {
+    .game-topbar {
+        padding: 12px 18px;
+    }
+
+    .game-page {
+        padding: 12px 18px 60px;
+    }
+
+    .section-title {
+        font-size: 1.25rem;
+    }
+
+    .spec-list {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 6px 20px;
+    }
+
+    .spec:nth-child(odd) {
+        padding-right: 0;
+    }
+
+    .text-block {
+        padding: 20px;
+    }
+
+    /* Joysticks move under the stage / slides on narrow screens */
+    .gallery-stage-row,
+    .slider-row {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .gallery-stage,
+    .slider-viewport {
+        flex-basis: 100%;
+        order: -1;
+    }
+
+    .slider-tab {
+        padding: 8px 12px 10px;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .gallery-thumbs li {
+        flex-basis: 130px;
+    }
+
+    .game-topbar .portfolio-mark {
+        display: none;
+    }
+
+    .download-btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+    }
+}

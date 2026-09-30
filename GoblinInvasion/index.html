@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goblin Invasion — Abraham Román</title>
+    <meta name="description" content="Goblin Invasion: Endless Runner 2D en pixel art. Ficha, jugabilidad, narrativa y galería.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/juego.css">
+    <style>
+        /* ===== Side decorations (only on screens wide enough to leave room beside the content) ===== */
+        .side-deco {
+            display: none;
+        }
+
+        @media (min-width: 1600px) {
+            .side-deco {
+                --side: calc((100vw - 1180px) / 2);
+                display: block;
+                position: fixed;
+                z-index: -1;
+                pointer-events: none;
+                image-rendering: pixelated;
+            }
+
+            /* Record flag hanging below the top bar, swaying */
+            .deco-flag {
+                top: 76px;
+                left: calc(var(--side) / 2 - 36px);
+                width: 72px;
+                transform-origin: top center;
+                filter: drop-shadow(0 0 14px rgba(125, 255, 138, 0.35));
+                animation: flag-sway 3.2s ease-in-out infinite;
+            }
+
+            /* Goblin standing in the bottom-left corner */
+            .deco-goblin {
+                bottom: -30px;
+                left: calc(var(--side) / 2 - min(170px, var(--side) * 0.6));
+                width: min(340px, calc(var(--side) * 1.2));
+                filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.6));
+                animation: goblin-bob 1.6s steps(2) infinite;
+            }
+
+            /* Crate obstacle in the bottom-right corner, facing the goblin */
+            .deco-crate {
+                bottom: 40px;
+                right: calc(var(--side) / 2 - 80px);
+                width: 160px;
+                filter: drop-shadow(8px 8px 0 rgba(0, 0, 0, 0.45));
+            }
+        }
+
+        @keyframes flag-sway {
+
+            0%,
+            100% {
+                transform: rotate(-4deg);
+            }
+
+            50% {
+                transform: rotate(4deg);
+            }
+        }
+
+        @keyframes goblin-bob {
+            to {
+                transform: translateY(-6px);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .deco-flag,
+            .deco-goblin {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+
+<!-- Per-game theme: green accents and green-tinted dark tones (background image goes on .game-bg below) -->
+<body style="--accent: #7dff8a; --accent-2: #2fbf5a; --accent-rgb: 125, 255, 138;
+             --bg: #07140b; --shade-rgb: 4, 14, 8; --panel: rgba(8, 26, 14, 0.72);
+             --text: #e4f5e7; --text-dim: rgba(228, 245, 231, 0.7);
+             --tag-text: #d2ffd8; --stick-fill: #06140a;">
+
+    <div class="game-bg" style="background-image: url('img/preview.png');" aria-hidden="true"></div>
+
+    <!-- Decorative sprites on the page edges -->
+    <img class="side-deco deco-flag" src="Record%20Flag.png" alt="" aria-hidden="true">
+    <img class="side-deco deco-goblin" src="GoblinPNG.png" alt="" aria-hidden="true">
+    <img class="side-deco deco-crate" src="Obstacle1.png" alt="" aria-hidden="true">
+
+    <nav class="game-topbar">
+        <a class="back-link" href="../index.html#proyectos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Portfolio
+        </a>
+        <div class="topbar-right">
+            <!-- Direct .zip download from the public builds repo's release (tag goblin-invasion-v1.0.0) -->
+            <a class="download-btn"
+                href="https://github.com/AbYoGrE/Abyogre-Game-Builds/releases/download/goblin-invasion-v1.0.0/GoblinInvasion.zip">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z" />
+                </svg>
+                Descargar juego
+            </a>
+            <span class="portfolio-mark">Portfolio 2026</span>
+        </div>
+    </nav>
+
+    <main class="game-page">
+
+        <!-- ===== LOGO + TAGS ===== -->
+        <header class="game-hero">
+            <h1><img class="game-logo" src="Title.png" alt="Goblin Invasion"></h1>
+            <div class="game-tags">
+                <span class="game-tag">Solo Dev</span>
+                <span class="game-tag">Endless Runner 2D</span>
+                <span class="game-tag">Pixel Art</span>
+            </div>
+            <p class="game-tagline">
+                Cansado de ser el enemigo más débil de la mazmorra, un goblin decide reunir a los suyos y formar
+                una <span class="hl">ola de goblins</span> imparable para convertirse en el
+                <span class="hl">boss de la mazmorra</span>.
+            </p>
+        </header>
+
+        <!-- ===== MI PAPEL ===== -->
+        <!-- TODO: cambia los títulos por tus roles reales en el proyecto -->
+        <section class="game-section reveal" aria-labelledby="rolesTitle">
+            <h2 class="section-title" id="rolesTitle">Mi papel</h2>
+            <ul class="roles-chain">
+                <li>Game Designer</li>
+                <li>Gameplay Programmer</li>
+                <li>Level Designer</li>
+                <li>System Designer</li>
+                <li>UI/UX Designer</li>
+                <li>UI/UX Programmer</li>
+            </ul>
+        </section>
+
+        <!-- ===== INFO SLIDER =====
+             Each .info-slide is one page of the carousel; its tab is built from data-title.
+             To add a section, add another <div class="info-slide" data-title="..."> -->
+        <section class="game-section info-slider reveal" aria-label="Información del juego">
+            <div class="slider-tabs" role="tablist"></div>
+
+            <div class="slider-row">
+                <button class="stick-btn left" type="button" aria-label="Sección anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="slider-viewport">
+                    <div class="slider-track">
+
+                        <!-- FICHA TÉCNICA -->
+                        <div class="info-slide" data-title="Ficha técnica">
+                            <dl class="spec-list pixel-window">
+                                <div class="spec">
+                                    <dt>Género</dt>
+                                    <dd>Endless Runner · Plataformas</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Perspectiva</dt>
+                                    <dd>2D · Scroll lateral</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Plataforma</dt>
+                                    <dd>PC</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Estado</dt>
+                                    <dd>Terminado</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Público objetivo</dt>
+                                    <dd>7 – 15 años · Partidas cortas e intensas</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Controles</dt>
+                                    <dd>Teclado · Ratón · Mando</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Motor</dt>
+                                    <dd>Unity</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Equipo</dt>
+                                    <dd>Solo Dev · Abraham Román</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Duración del desarrollo</dt>
+                                    <dd>3 meses</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Generación de niveles</dt>
+                                    <dd>Procedural · 20 piezas diseñadas</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- ESTILO DE JUEGO -->
+                        <div class="info-slide" data-title="Estilo de juego">
+                            <div class="text-block pixel-window">
+                                <p>Los goblins <span class="hl">corren solos</span>: el jugador solo tiene dos
+                                    acciones, <span class="hl">saltar</span> y <span class="hl">ordenar cargar</span> a
+                                    los goblins del grupo. Cuanto más se mantiene el salto, más alto llega, y el grupo
+                                    salta en cadena creando un <span class="hl">efecto ola</span>.</p>
+                                <p>El objetivo es recorrer la <span class="hl">mayor distancia</span> posible por una
+                                    mazmorra generada por piezas. Cuanto más se avanza, menos ayudas aparecen y más
+                                    pesados son los obstáculos y enemigos.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Sistema de peso</h3>
+                                    <p>Cada obstáculo y enemigo tiene un peso: hacen falta tantos goblins como su peso
+                                        para apartarlo. Si chocas, pierdes esa misma cantidad de goblins.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Crece la horda</h3>
+                                    <p>Los goblins que encuentras se unen al grupo, y al llenar la barra de experiencia
+                                        con puntos de energía cae uno nuevo del cielo.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Tienda de mejoras</h3>
+                                    <p>Cada 10 metros recorridos es una moneda. Gástalas en mejoras permanentes que
+                                        dan ventaja desde el inicio de la siguiente partida.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NARRATIVA -->
+                        <div class="info-slide" data-title="Narrativa">
+                            <div class="text-block pixel-window">
+                                <p>Un <span class="hl">goblin</span> cualquiera, de los que abundan en las mazmorras,
+                                    se cansa de ser uno de los <span class="hl">enemigos más débiles</span> que se
+                                    encuentran los aventureros. Así que traza un plan: convertirse en el
+                                    <span class="hl">boss de la mazmorra</span> y ganarse el respeto de todos.</p>
+                                <p>Solo no puede con los enemigos más fuertes, pero con otros de su especie la cosa
+                                    cambia. Como la mayoría de goblins solo corren hacia delante y cargan contra todo
+                                    lo que ven, nuestro protagonista aprovecha ese instinto para formar una
+                                    <span class="hl">ola de goblins</span>.</p>
+                                <p><span class="hl">"Esta mazmorra pertenece al ejército goblin."</span></p>
+                            </div>
+                        </div>
+
+                        <!-- DISEÑO DE NIVELES -->
+                        <div class="info-slide" data-title="Diseño de niveles">
+                            <div class="text-block pixel-window">
+                                <p>Al ser un Infinite Runner no hay un nivel fijo: la mazmorra se construye de forma
+                                    <span class="hl">procedural</span> encadenando <span class="hl">20 piezas</span>
+                                    diseñadas a mano, para que cada partida sea distinta pero siga unos patrones
+                                    concretos.</p>
+                                <p>Cada pieza tiene puntos de spawn para <span class="hl">experiencia</span>,
+                                    <span class="hl">goblins</span> y <span class="hl">obstáculos / enemigos</span>,
+                                    cuya probabilidad cambia con la distancia: más allá de 1,2 km la experiencia baja al
+                                    25%, los goblins al 5% y los obstáculos llegan a peso 8.</p>
+                                <p>El <span class="hl">tutorial</span> es interactivo: una zona predefinida que detiene
+                                    el tiempo para presentar cada mecánica justo cuando aparece.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Sección siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== GALERÍA =====
+             Para añadir fotos, gifs o vídeos, añade otro <li> a la lista .gallery-thumbs:
+             <li><button data-src="img/archivo.gif" data-caption="Texto que aparece abajo"></button></li> -->
+        <section class="game-section gallery reveal" aria-labelledby="galleryTitle">
+            <h2 class="section-title" id="galleryTitle">Galería</h2>
+
+            <div class="gallery-stage-row">
+                <button class="stick-btn left" type="button" aria-label="Anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="gallery-stage pixel-window">
+                    <div class="gallery-hud">
+                        <span class="gallery-caption"></span>
+                        <span class="gallery-counter"></span>
+                        <button class="gallery-toggle" type="button"></button>
+                    </div>
+                    <div class="gallery-progress"></div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="gallery-thumbs">
+                <li><button type="button" data-src="GoblinInvasion_Gameplay.mp4" data-caption="Gameplay"></button></li>
+                <li><button type="button" data-src="TituloGIF.gif" data-caption="Pantalla de título"></button></li>
+                <li><button type="button" data-src="JugarGIF.gif" data-caption="La ola de goblins"></button></li>
+                <li><button type="button" data-src="AtacarGIF.gif" data-caption="Ordenar cargar"></button></li>
+                <li><button type="button" data-src="EmpujarGIF.gif" data-caption="Apartar obstáculos"></button></li>
+                <li><button type="button" data-src="TiendaPNG.png" data-caption="Tienda de mejoras"></button></li>
+            </ul>
+        </section>
+
+        <footer class="game-footer">
+            <a class="back-link" href="../index.html#proyectos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6" />
+                </svg>
+                Volver a Mis Proyectos
+            </a>
+        </footer>
+    </main>
+
+    <script src="../js/juego.js"></script></body>
+
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yetilette — Abraham Román</title>
+    <meta name="description" content="Yetilette: aventura navideña de minijuegos hecha por FullBacon Games. Ficha, programación, narrativa y galería.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/juego.css">
+    <style>
+        /* Team list: name + role per row */
+        .team-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            padding: 10px 30px;
+            list-style: none;
+        }
+
+        .team-list li {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 14px 0;
+            border-bottom: 1px dashed var(--line);
+        }
+
+        .team-list li:nth-child(odd) {
+            padding-right: 24px;
+        }
+
+        .team-list strong {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .team-list span {
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        /* Highlight the portfolio owner in the team list */
+        .team-list li.me strong::after {
+            content: ' (yo)';
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        @media (max-width: 800px) {
+            .team-list {
+                grid-template-columns: minmax(0, 1fr);
+                padding: 6px 20px;
+            }
+
+            .team-list li:nth-child(odd) {
+                padding-right: 0;
+            }
+        }
+    </style>
+</head>
+
+<!-- Per-game theme: cyan accents and cyan-tinted dark tones (background image goes on .game-bg below) -->
+<body style="--accent: #4df3ff; --accent-2: #1c9fd8; --accent-rgb: 77, 243, 255;
+             --bg: #06121a; --shade-rgb: 3, 12, 18; --panel: rgba(8, 22, 32, 0.72);
+             --text: #e2f6fa; --text-dim: rgba(226, 246, 250, 0.7);
+             --tag-text: #cff8ff; --stick-fill: #04121a;">
+
+    <div class="game-bg" style="background-image: url('img/shot5.png');" aria-hidden="true"></div>
+
+    <nav class="game-topbar">
+        <a class="back-link" href="../index.html#proyectos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Portfolio
+        </a>
+        <div class="topbar-right">
+            <!-- Direct .zip download from the public builds repo's release (tag yetilette-v1.0.0) -->
+            <a class="download-btn"
+                href="https://github.com/AbYoGrE/Abyogre-Game-Builds/releases/download/yetilette-v1.0.0/Yetilette.zip">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z" />
+                </svg>
+                Descargar juego
+            </a>
+            <span class="portfolio-mark">Portfolio 2026</span>
+        </div>
+    </nav>
+
+    <main class="game-page">
+
+        <!-- ===== LOGO + TAGS ===== -->
+        <header class="game-hero">
+            <h1><img class="game-logo" src="img/logo.png" alt="Yetilette"></h1>
+            <div class="game-tags">
+                <span class="game-tag">FullBacon Games</span>
+                <span class="game-tag">Aventura de minijuegos</span>
+                <span class="game-tag">Game Jam</span>
+            </div>
+            <div class="game-award">
+                <span class="game-tag game-tag--award">★ Favorito del público · Christmas Jam 2024</span>
+            </div>
+            <p class="game-tagline">
+                Es Navidad y te ha tocado hacerle el regalo del amigo invisible a <span class="hl">Enner el
+                    Yeti</span>, el jefe de la aldea. Recorre la aldea, supera los minijuegos y consigue lo necesario
+                para arreglar la <span class="hl">Yetilette</span> antes de entregarla.
+            </p>
+        </header>
+
+        <!-- ===== MI PAPEL ===== -->
+        <section class="game-section reveal" aria-labelledby="rolesTitle">
+            <h2 class="section-title" id="rolesTitle">Mi papel</h2>
+            <ul class="roles-chain">
+                <li>Gameplay Programmer</li>
+                <li>State Machine Programmer</li>
+                <li>Game Flow Programmer</li>
+                <li>Physics Programmer</li>
+            </ul>
+        </section>
+
+        <!-- ===== INFO SLIDER =====
+             Each .info-slide is one page of the carousel; its tab is built from data-title.
+             To add a section, add another <div class="info-slide" data-title="..."> -->
+        <section class="game-section info-slider reveal" aria-label="Información del juego">
+            <div class="slider-tabs" role="tablist"></div>
+
+            <div class="slider-row">
+                <button class="stick-btn left" type="button" aria-label="Sección anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="slider-viewport">
+                    <div class="slider-track">
+
+                        <!-- FICHA TÉCNICA -->
+                        <div class="info-slide" data-title="Ficha técnica">
+                            <dl class="spec-list pixel-window">
+                                <div class="spec">
+                                    <dt>Género</dt>
+                                    <dd>Aventura · Colección de minijuegos</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Perspectiva</dt>
+                                    <dd>3D primera persona · Minijuegos 2D y 3D</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Plataforma</dt>
+                                    <dd>PC</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Estado</dt>
+                                    <dd>Publicado en itch.io</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Evento</dt>
+                                    <dd>Christmas Jam 2024</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Premio</dt>
+                                    <dd>Favorito del público</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Motor</dt>
+                                    <dd>Unity</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Equipo</dt>
+                                    <dd>FullBacon Games · 7 personas</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Duración del desarrollo</dt>
+                                    <dd>4 días</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Mi rol</dt>
+                                    <dd>Programación</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- ESTILO DE JUEGO -->
+                        <div class="info-slide" data-title="Estilo de juego">
+                            <div class="text-block pixel-window">
+                                <p>Una <span class="hl">centralita de minijuegos</span> unida por una historia lineal.
+                                    Desde el bosque de la aldea, en <span class="hl">primera persona</span>, un cartel
+                                    marca el camino hacia cada minijuego: el <span class="hl">Tobogán del
+                                        Pingüino</span>, la <span class="hl">Cueva Oscura</span> y la
+                                    <span class="hl">Pelea contra el jefe Yeti</span>.</p>
+                                <p>Cada uno de los <span class="hl">tres minijuegos principales</span> tiene sus
+                                    propias reglas y te recompensa con una de las piezas del regalo: la
+                                    <span class="hl">cinta aislante</span>, la <span class="hl">savia</span> y el
+                                    <span class="hl">papel de regalo</span>. Con las tres, por fin puedes montar el
+                                    regalo.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Tobogán del Pingüino</h3>
+                                    <p>Deslízate por la nieve como un pingüino y recoge todos los peces que puedas
+                                        antes de llegar a la meta.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Cueva Oscura</h3>
+                                    <p>Explora la cueva con una antorcha que se va apagando y sigue las pistas del
+                                        Miniyeti para encontrar el camino correcto.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Pelea contra el jefe Yeti</h3>
+                                    <p>Un combate cara a cara en 2D contra el jefe Yeti, con barras de vida para ambos.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- PROGRAMACIÓN (mi trabajo) -->
+                        <div class="info-slide" data-title="Programación">
+                            <div class="text-block pixel-window">
+                                <p>En Yetilette mi trabajo fue sobre todo de <span class="hl">programación</span>:
+                                    construir la estructura que une la aventura con los minijuegos y hacer que cada
+                                    uno funcionara como un juego completo por sí mismo.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Flujo de juego</h3>
+                                    <p>La progresión de la historia: qué zonas están disponibles, cuándo empieza y
+                                        acaba cada minijuego y cómo se guardan las piezas conseguidas hasta montar el
+                                        regalo.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Máquinas de estado</h3>
+                                    <p>Estados claros para personajes, minijuegos y partida (inicio, jugando, victoria,
+                                        derrota), para que cada pieza reaccione de forma predecible.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Físicas</h3>
+                                    <p>Movimiento y colisiones de los minijuegos, como el Tobogán del Pingüino y la
+                                        recogida de peces.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NARRATIVA -->
+                        <div class="info-slide" data-title="Narrativa">
+                            <div class="text-block pixel-window">
+                                <p>Es <span class="hl">Navidad</span> y no tienes regalo para el amigo invisible, que
+                                    este año es nada menos que <span class="hl">Enner el Yeti</span>, el jefe de la
+                                    aldea. Decides regalarle el último modelo en máquinas de afeitar: la
+                                    <span class="hl">Yetilette</span>.</p>
+                                <p>Pero poco antes de entregarlo <span class="hl">se te rompe el regalo</span> y
+                                    además se te olvida el envoltorio. Para arreglarlo todo necesitarás conseguir
+                                    <span class="hl">cinta aislante</span>, <span class="hl">savia</span> y
+                                    <span class="hl">papel de regalo</span>.</p>
+                            </div>
+                        </div>
+
+                        <!-- EQUIPO -->
+                        <div class="info-slide" data-title="Equipo">
+                            <ul class="team-list pixel-window">
+                                <li class="me"><strong>Abraham Román Gómez</strong><span>Programación</span></li>
+                                <li><strong>Eduardo Ruiz Ocaña</strong><span>Programación</span></li>
+                                <li><strong>César Moreno De Mingo</strong><span>Level y Game Design</span></li>
+                                <li><strong>Ludmilla Franchetti de Andrade</strong><span>Modelado y animación 3D</span></li>
+                                <li><strong>Samuel Mihai Chirita Guerra</strong><span>Modelado y animación 3D</span></li>
+                                <li><strong>Marina García Iglesias</strong><span>Arte y animación 2D</span></li>
+                                <li><strong>Jim Sergio Rosales</strong><span>Arte 2D</span></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Sección siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== GALERÍA =====
+             Para añadir fotos, gifs o vídeos, añade otro <li> a la lista .gallery-thumbs:
+             <li><button data-src="img/archivo.gif" data-caption="Texto que aparece abajo"></button></li> -->
+        <section class="game-section gallery reveal" aria-labelledby="galleryTitle">
+            <h2 class="section-title" id="galleryTitle">Galería</h2>
+
+            <div class="gallery-stage-row">
+                <button class="stick-btn left" type="button" aria-label="Anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="gallery-stage pixel-window">
+                    <div class="gallery-hud">
+                        <span class="gallery-caption"></span>
+                        <span class="gallery-counter"></span>
+                        <button class="gallery-toggle" type="button"></button>
+                    </div>
+                    <div class="gallery-progress"></div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="gallery-thumbs">
+                <li><button type="button" data-src="Yetilette_Gameplay.mp4" data-caption="Gameplay"></button></li>
+                <li><button type="button" data-src="img/shot1.png" data-caption="Pantalla de título"></button></li>
+                <li><button type="button" data-src="img/shot5.png" data-caption="El cruce de caminos"></button></li>
+                <li><button type="button" data-src="img/shot3.png" data-caption="Tobogán del Pingüino"></button></li>
+                <li><button type="button" data-src="img/shot4.png" data-caption="Cueva Oscura"></button></li>
+                <li><button type="button" data-src="img/shot6.png" data-caption="Un habitante de la cueva"></button></li>
+                <li><button type="button" data-src="img/shot2.png" data-caption="Pelea contra el jefe Yeti"></button></li>
+                <li><button type="button" data-src="img/shot7.png" data-caption="Enner el Yeti"></button></li>
+            </ul>
+        </section>
+
+        <footer class="game-footer">
+            <a class="back-link" href="../index.html#proyectos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6" />
+                </svg>
+                Volver a Mis Proyectos
+            </a>
+        </footer>
+    </main>
+
+    <script src="../js/juego.js"></script>
+</body>
+
+</html>

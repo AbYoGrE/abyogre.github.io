@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Revenge — Abraham Román</title>
+    <meta name="description" content="Human Revenge: Twin-stick shooter por oleadas con elementos de Tower Defense. Ficha, jugabilidad, narrativa y galería.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/juego.css">
+    <style>
+        /* "Programación destacada" label inside the atmospheres slide */
+        .highlight-badge {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 5px 12px;
+            background: rgba(var(--accent-rgb), 0.14);
+            border: 1px solid var(--accent);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        /* ===== Side decorations (only on screens wide enough to leave room beside the content) ===== */
+        .side-deco {
+            display: none;
+        }
+
+        @media (min-width: 1600px) {
+            .side-deco {
+                --side: calc((100vw - 1180px) / 2);
+                display: block;
+                position: fixed;
+                z-index: -1;
+                pointer-events: none;
+                filter: drop-shadow(0 0 16px rgba(var(--accent-rgb), 0.35)) drop-shadow(6px 8px 0 rgba(0, 0, 0, 0.4));
+            }
+
+            /* Oxygen tank floating below the top bar, left side */
+            .deco-tank {
+                top: 90px;
+                left: calc(var(--side) / 2 - 60px);
+                width: 120px;
+                animation: deco-float 4s ease-in-out infinite;
+            }
+
+            /* Sword in the bottom-left corner */
+            .deco-sword {
+                bottom: 20px;
+                left: calc(var(--side) / 2 - min(120px, var(--side) * 0.4));
+                width: min(240px, calc(var(--side) * 0.8));
+                transform: rotate(-10deg);
+            }
+
+            /* Oxygen rifle on the right edge */
+            .deco-rifle {
+                top: 45%;
+                right: calc(var(--side) / 2 - min(130px, var(--side) * 0.42));
+                width: min(260px, calc(var(--side) * 0.84));
+                animation: deco-float 5s ease-in-out infinite reverse;
+            }
+        }
+
+        @keyframes deco-float {
+
+            0%,
+            100% {
+                translate: 0 0;
+            }
+
+            50% {
+                translate: 0 -10px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .side-deco {
+                animation: none !important;
+            }
+        }
+
+        /* Weapon cards: image on top of each feature */
+        .weapon img {
+            display: block;
+            width: 100%;
+            height: 110px;
+            margin-bottom: 12px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(var(--accent-rgb), 0.35));
+        }
+
+        .weapon .stats {
+            margin-top: 10px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .info-slide .features.weapons {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<!-- Per-game theme: light pink accents and pink-tinted dark tones (background image goes on .game-bg below) -->
+<body style="--accent: #ffc9ee; --accent-2: #ff8fd3; --accent-rgb: 255, 201, 238;
+             --bg: #150a12; --shade-rgb: 14, 6, 12; --panel: rgba(30, 14, 26, 0.72);
+             --text: #fbeef7; --text-dim: rgba(251, 238, 247, 0.7);
+             --tag-text: #ffe6f7; --stick-fill: #12070f;">
+
+    <div class="game-bg" style="background-image: url('GeneralPNG.png');" aria-hidden="true"></div>
+
+    <!-- Decorative icons on the page edges -->
+    <img class="side-deco deco-tank" src="FillOxygenTank.png" alt="" aria-hidden="true">
+    <img class="side-deco deco-sword" src="Arma4.png" alt="" aria-hidden="true">
+    <img class="side-deco deco-rifle" src="Arma1.png" alt="" aria-hidden="true">
+
+    <nav class="game-topbar">
+        <a class="back-link" href="../index.html#proyectos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Portfolio
+        </a>
+        <div class="topbar-right">
+            <!-- Direct .zip download from the public builds repo's release (tag human-revenge-v1.0.0) -->
+            <a class="download-btn"
+                href="https://github.com/AbYoGrE/Abyogre-Game-Builds/releases/download/human-revenge-v1.0.0/HumanRevenge.zip">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z" />
+                </svg>
+                Descargar juego
+            </a>
+            <span class="portfolio-mark">Portfolio 2026</span>
+        </div>
+    </nav>
+
+    <main class="game-page">
+
+        <!-- ===== LOGO + TAGS ===== -->
+        <header class="game-hero">
+            <h1><img class="game-logo" src="img/logo.png" alt="Human Revenge"></h1>
+            <div class="game-tags">
+                <span class="game-tag">Solo Dev</span>
+                <span class="game-tag">Twin-Stick Shooter</span>
+                <span class="game-tag">Tower Defense</span>
+            </div>
+            <p class="game-tagline">
+                Escolta la <span class="hl">torre de oxígeno</span> por un planeta alienígena y conviértelo, oleada
+                tras oleada, en un lugar donde la humanidad pueda <span class="hl">respirar</span>.
+            </p>
+        </header>
+
+        <!-- ===== MI PAPEL ===== -->
+        <!-- TODO: cambia los títulos por tus roles reales en el proyecto -->
+        <section class="game-section reveal" aria-labelledby="rolesTitle">
+            <h2 class="section-title" id="rolesTitle">Mi papel</h2>
+            <ul class="roles-chain">
+                <li>Game Designer</li>
+                <li>Gameplay Programmer</li>
+                <li>System Designer</li>
+                <li>AI Programmer</li>
+                <li>Level Designer</li>
+                <li>UI/UX Designer</li>
+            </ul>
+        </section>
+
+        <!-- ===== INFO SLIDER =====
+             Each .info-slide is one page of the carousel; its tab is built from data-title.
+             To add a section, add another <div class="info-slide" data-title="..."> -->
+        <section class="game-section info-slider reveal" aria-label="Información del juego">
+            <div class="slider-tabs" role="tablist"></div>
+
+            <div class="slider-row">
+                <button class="stick-btn left" type="button" aria-label="Sección anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="slider-viewport">
+                    <div class="slider-track">
+
+                        <!-- FICHA TÉCNICA -->
+                        <div class="info-slide" data-title="Ficha técnica">
+                            <dl class="spec-list pixel-window">
+                                <div class="spec">
+                                    <dt>Género</dt>
+                                    <dd>Twin-Stick Shooter · Tower Defense</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Perspectiva</dt>
+                                    <dd>3D · Vista Top-Down</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Plataforma</dt>
+                                    <dd>PC · Móvil (planificado)</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Estado</dt>
+                                    <dd>Terminado</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Público objetivo</dt>
+                                    <dd>7 – 15 años · Estética cartoon / chibi</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Controles</dt>
+                                    <dd>Teclado y ratón</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Motor</dt>
+                                    <dd>Unity</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Equipo</dt>
+                                    <dd>Solo Dev · Abraham Román</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Duración del desarrollo</dt>
+                                    <dd>3 meses</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Referentes</dt>
+                                    <dd>Splatoon · Modo Torre · Salmon Run</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- ESTILO DE JUEGO -->
+                        <div class="info-slide" data-title="Estilo de juego">
+                            <div class="text-block pixel-window">
+                                <p>Un <span class="hl">shooter de doble stick</span> en modo
+                                    <span class="hl">infinito</span>: la torre recorre 5 puntos de control en forma de
+                                    estrella y en cada tramo pide una cuota de <span class="hl">muestras
+                                        alienígenas</span> que se consiguen al eliminar enemigos. Si no se cumple a
+                                    tiempo, fin de la partida.</p>
+                                <p>Los disparos no hacen daño fijo: el oxígeno se filtra en los trajes y
+                                    <span class="hl">daña poco a poco</span>. Cada bala deja un rastro de gas, como la
+                                    tinta de Splatoon, que recarga tu munición y debilita al enemigo.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Guerra de atmósferas</h3>
+                                    <p>Tu oxígeno te protege y recarga. El gas morado alienígena te ralentiza, te
+                                        quita munición y vida.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Oleadas y cuotas</h3>
+                                    <p>La cuota crece x1.5 por oleada. Con un 25% de probabilidad llega una oleada
+                                        oscura con zombis y muestras dobles.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Mini-objetivos</h3>
+                                    <p>Mini-bosses, entregas express y habilidades como el dash o la granada de oxígeno
+                                        para arriesgar a cambio de más muestras.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- SISTEMA DE ATMÓSFERAS (programación destacada) -->
+                        <div class="info-slide" data-title="Sistema de atmósferas">
+                            <div class="text-block pixel-window">
+                                <span class="highlight-badge">Programación destacada</span>
+                                <p>El corazón del juego es un <span class="hl">sistema de territorios</span> inspirado
+                                    en la tinta de la saga <span class="hl">Splatoon</span>, programado desde cero. Cada
+                                    disparo, dash o granada <span class="hl">"fumiga" casillas</span> del suelo con el
+                                    gas de su bando, y el mapa se convierte en una disputa constante entre el
+                                    <span class="hl">oxígeno humano</span> y el <span class="hl">gas tóxico
+                                        alienígena</span>.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Territorio por casillas</h3>
+                                    <p>El suelo se divide en casillas con dueño y tiempo de vida. Cada arma pinta un
+                                        número distinto de casillas y el gas se disipa pasados unos segundos si nadie lo
+                                        renueva.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Efectos según el bando</h3>
+                                    <p>En tu oxígeno recargas munición, cortas el daño progresivo y el dash se recarga
+                                        antes. En el gas enemigo pierdes velocidad, munición y vida, y a los aliens les
+                                        pasa igual en el tuyo.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>La torre como base</h3>
+                                    <p>La torre mantiene siempre un área de oxígeno a su alrededor, que acompaña su
+                                        recorrido por el mapa y convierte cada punto de control en una zona segura que
+                                        defender.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- ARMAS -->
+                        <div class="info-slide" data-title="Armas">
+                            <div class="features weapons">
+                                <article class="feature weapon pixel-window">
+                                    <img src="Arma1.png" alt="Fusil de Oxígeno">
+                                    <h3><span>◆</span>Fusil de Oxígeno</h3>
+                                    <p>Ráfagas rápidas que impactan directamente en el primer alien que encuentran.</p>
+                                    <p class="stats">Daño 10 · Cadencia 0.2 s</p>
+                                </article>
+                                <article class="feature weapon pixel-window">
+                                    <img src="Arma2.png" alt="Lanzagranadas.v02">
+                                    <h3><span>◆</span>Lanzagranadas.v02</h3>
+                                    <p>Proyectiles que caen unos metros por delante y explotan en área.</p>
+                                    <p class="stats">Daño 20 · Cadencia 0.5 s</p>
+                                </article>
+                                <article class="feature weapon pixel-window">
+                                    <img src="Arma3.png" alt="Purificador 3000">
+                                    <h3><span>◆</span>Purificador 3000</h3>
+                                    <p>Carga y lanza un rayo de largo alcance que atraviesa a todos los enemigos.</p>
+                                    <p class="stats">Daño 125 · Cadencia 4 s</p>
+                                </article>
+                                <article class="feature weapon pixel-window">
+                                    <img src="Arma4.png" alt="EspadO2n">
+                                    <h3><span>◆</span>EspadO2n</h3>
+                                    <p>El arma cuerpo a cuerpo: golpes rápidos en área delante del jugador.</p>
+                                    <p class="stats">Daño 20 · Cadencia 0.2 s</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NARRATIVA -->
+                        <div class="info-slide" data-title="Narrativa">
+                            <div class="text-block pixel-window">
+                                <p>En un futuro lejano, la humanidad devuelve el golpe: años atrás los
+                                    <span class="hl">alienígenas</span> intentaron conquistar la Tierra, y ahora un
+                                    comando humano lanza un <span class="hl">ataque sorpresa</span> sobre su planeta.</p>
+                                <p>El plan es instalar una <span class="hl">torre</span> que expulsa
+                                    <span class="hl">oxígeno</span>, mortal para los alienígenas igual que su aire lo es
+                                    para nosotros. La torre avanza por puntos de control creando micro-atmósferas hasta
+                                    que el planeta sea habitable… pero el enemigo no se lo pondrá nada fácil.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Sección siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== GALERÍA =====
+             Para añadir fotos, gifs o vídeos, añade otro <li> a la lista .gallery-thumbs:
+             <li><button data-src="img/archivo.gif" data-caption="Texto que aparece abajo"></button></li> -->
+        <section class="game-section gallery reveal" aria-labelledby="galleryTitle">
+            <h2 class="section-title" id="galleryTitle">Galería</h2>
+
+            <div class="gallery-stage-row">
+                <button class="stick-btn left" type="button" aria-label="Anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="gallery-stage pixel-window">
+                    <div class="gallery-hud">
+                        <span class="gallery-caption"></span>
+                        <span class="gallery-counter"></span>
+                        <button class="gallery-toggle" type="button"></button>
+                    </div>
+                    <div class="gallery-progress"></div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="gallery-thumbs">
+                <li><button type="button" data-src="Gameplay_HumanRevenge.mp4" data-caption="Gameplay"></button></li>
+                <li><button type="button" data-src="LoopGIF.gif" data-caption="Escoltando la torre"></button></li>
+                <li><button type="button" data-src="DispararGIF.gif" data-caption="Disparo de oxígeno"></button></li>
+                <li><button type="button" data-src="MiniBossGIF.gif" data-caption="Mini-boss"></button></li>
+                <li><button type="button" data-src="TorrePNG.png" data-caption="La torre de oxígeno"></button></li>
+                <li><button type="button" data-src="GeneralPNG.png" data-caption="Base humana"></button></li>
+            </ul>
+        </section>
+
+        <footer class="game-footer">
+            <a class="back-link" href="../index.html#proyectos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6" />
+                </svg>
+                Volver a Mis Proyectos
+            </a>
+        </footer>
+    </main>
+
+    <script src="../js/juego.js"></script>
+</body>
+
+</html>

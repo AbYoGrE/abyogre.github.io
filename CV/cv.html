@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CV · Abraham Román Gómez</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!--
+        Para exportar a PDF: abrir en Chrome/Edge → Ctrl+P → Destino "Guardar como PDF",
+        Márgenes "Ninguno" y activar "Gráficos de fondo".
+        Foto: se carga desde "Foto CV.jpeg" en la raíz del proyecto.
+        Los textos resaltados en amarillo (.todo) son datos pendientes de rellenar.
+    -->
+    <style>
+        :root {
+            --navy: #0d2344;
+            --side: #16335f;
+            --accent: #2f8fd8;
+            --accent-soft: #d9ebfa;
+            --text: #1d2433;
+            --muted: #5b6577;
+            --line: #d5dbe5;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        body {
+            background: #8a94a6;
+            font-family: "Raleway", "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            font-size: 9.2pt;
+            line-height: 1.38;
+        }
+
+        .page {
+            width: 210mm;
+            height: 297mm;
+            margin: 10mm auto;
+            background: #fff;
+            display: grid;
+            grid-template-columns: 68mm 1fr;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .25);
+        }
+
+        @media print {
+            body {
+                background: #fff;
+            }
+
+            .page {
+                margin: 0;
+                box-shadow: none;
+            }
+        }
+
+        /* ---------- Sidebar ---------- */
+        .side {
+            background: var(--side);
+            color: #e6edf7;
+            padding: 11mm 7mm 9mm;
+            display: flex;
+            flex-direction: column;
+            gap: 5.5mm;
+        }
+
+        .photo {
+            width: 40mm;
+            height: 40mm;
+            margin: 0 auto;
+            border-radius: 50%;
+            border: 1.2mm solid var(--accent);
+            background: var(--navy);
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+            font-size: 22pt;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        .photo {
+            position: relative;
+        }
+
+        .photo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .side h2 {
+            font-size: 10pt;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: #fff;
+            padding-bottom: 1.6mm;
+            margin-bottom: 2.4mm;
+            border-bottom: 0.4mm solid var(--accent);
+        }
+
+        .side p {
+            font-size: 8.8pt;
+            color: #d3deee;
+        }
+
+        .side strong {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .skill-group {
+            margin-bottom: 2.4mm;
+        }
+
+        .skill-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-group h3 {
+            font-size: 7.6pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8fc3ee;
+            margin-bottom: 1.2mm;
+        }
+
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2mm;
+        }
+
+        .chip {
+            font-size: 8pt;
+            font-weight: 500;
+            padding: 0.5mm 2.2mm;
+            border-radius: 3mm;
+            background: rgba(255, 255, 255, .1);
+            border: 0.25mm solid rgba(143, 195, 238, .45);
+            color: #fff;
+        }
+
+        .chip.key {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .lang {
+            display: flex;
+            justify-content: space-between;
+            font-size: 8.8pt;
+        }
+
+        .lang+.lang {
+            margin-top: 1mm;
+        }
+
+        .lang span {
+            color: #d3deee;
+        }
+
+        .contact {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.9mm;
+        }
+
+        .contact li {
+            display: flex;
+            align-items: center;
+            gap: 2.4mm;
+            font-size: 8.4pt;
+            color: #e6edf7;
+            word-break: break-all;
+        }
+
+        .contact a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .ico {
+            flex: none;
+            width: 5.6mm;
+            height: 5.6mm;
+            border-radius: 50%;
+            background: #fff;
+            display: grid;
+            place-items: center;
+        }
+
+        .ico svg {
+            width: 3.3mm;
+            height: 3.3mm;
+            fill: var(--side);
+        }
+
+        /* ---------- Main ---------- */
+        .main {
+            padding: 12mm 11mm 9mm 10mm;
+            display: flex;
+            flex-direction: column;
+            gap: 7mm;
+        }
+
+        header h1 {
+            font-size: 25pt;
+            font-weight: 800;
+            color: var(--navy);
+            line-height: 1.05;
+            letter-spacing: -0.3px;
+        }
+
+        header .role {
+            margin-top: 1.8mm;
+            font-size: 12.5pt;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        header .role b {
+            color: var(--navy);
+            font-weight: 700;
+        }
+
+        .main h2 {
+            display: flex;
+            align-items: center;
+            gap: 3mm;
+            font-size: 10.5pt;
+            font-weight: 700;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--navy);
+            margin-bottom: 2.6mm;
+        }
+
+        .main h2::after {
+            content: "";
+            flex: 1;
+            height: 0.4mm;
+            background: var(--line);
+        }
+
+        .entry+.entry {
+            margin-top: 3.6mm;
+        }
+
+        .entry-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            gap: 3mm;
+        }
+
+        .entry h3 {
+            font-size: 10.6pt;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .date {
+            flex: none;
+            font-size: 8.4pt;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .sub {
+            font-size: 9.2pt;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .highlight {
+            margin-top: 1.6mm;
+            padding: 1.4mm 3mm;
+            background: var(--accent-soft);
+            border-radius: 1.5mm;
+            font-size: 8.9pt;
+            color: var(--navy);
+        }
+
+        .highlight b {
+            font-weight: 700;
+        }
+
+        .detail {
+            margin-top: 0.8mm;
+            font-size: 8.9pt;
+        }
+
+        .detail b {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .entry ul {
+            margin: 1.4mm 0 0 4mm;
+            font-size: 9.4pt;
+        }
+
+        .entry li {
+            margin-top: 0.8mm;
+        }
+
+        .entry li::marker {
+            color: var(--accent);
+        }
+
+        .project {
+            padding: 2.2mm 3mm;
+            border-left: 0.8mm solid var(--accent);
+            background: #f4f8fc;
+            border-radius: 0 1.5mm 1.5mm 0;
+        }
+
+        .project+.project {
+            margin-top: 2.8mm;
+        }
+
+        .project .tag {
+            font-size: 7.4pt;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        .project p {
+            margin-top: 0.6mm;
+            font-size: 8.7pt;
+        }
+
+        .project .roles {
+            margin-top: 0.8mm;
+            font-size: 8pt;
+            color: var(--muted);
+        }
+
+        .project .roles b {
+            color: var(--navy);
+            font-weight: 600;
+        }
+
+        .award {
+            color: #b8860b;
+            font-weight: 700;
+        }
+
+        .more {
+            margin-top: 2.2mm;
+            font-size: 8.5pt;
+            color: var(--muted);
+        }
+
+        .more b {
+            color: var(--navy);
+        }
+
+        .awards {
+            list-style: none;
+        }
+
+        .awards li {
+            display: flex;
+            gap: 2.4mm;
+        }
+
+        .awards li+li,
+        .extra li+li {
+            margin-top: 1.2mm;
+        }
+
+        .extra {
+            margin-left: 4mm;
+        }
+
+        .extra li::marker {
+            color: var(--accent);
+        }
+
+        .awards .star {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .todo,
+        .side .todo {
+            background: #fff3a8;
+            color: #6b5600;
+            padding: 0 1mm;
+            border-radius: 0.8mm;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+
+        <!-- ================= SIDEBAR ================= -->
+        <aside class="side">
+            <div class="photo">
+                <img src="../Foto%20CV.jpeg" alt="Abraham Román Gómez" onerror="this.remove()">
+                <span class="initials">AR</span>
+            </div>
+
+            <section>
+                <h2>Sobre mí</h2>
+                <p>Apasionado por los videojuegos, <strong>creativo</strong> y <strong>resolutivo</strong>, con
+                    experiencia en proyectos en equipo, en solitario y en <strong>Game Jams</strong>.</p>
+                <p style="margin-top:1.6mm">Busco unirme a un equipo de desarrollo donde aportar y seguir creciendo
+                    como profesional.</p>
+            </section>
+
+            <section>
+                <h2>Habilidades</h2>
+                <div class="skill-group">
+                    <h3>Motores</h3>
+                    <div class="chips">
+                        <span class="chip key">Unity</span>
+                        <span class="chip">Unreal Engine</span>
+                        <span class="chip">Godot</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>Lenguajes</h3>
+                    <div class="chips">
+                        <span class="chip key">C#</span>
+                        <span class="chip">Blueprints</span>
+                    </div>
+                </div>
+                <div class="skill-group">
+                    <h3>Herramientas</h3>
+                    <div class="chips">
+                        <span class="chip">Git</span>
+                        <span class="chip">Blender</span>
+                        <span class="chip">Photoshop</span>
+                        <span class="chip">Filmora</span>
+                        <span class="chip">Office</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Idiomas</h2>
+                <div class="lang"><strong>Castellano</strong><span>Nativo</span></div>
+                <div class="lang"><strong>Inglés</strong><span>B1 · Cambridge</span></div>
+            </section>
+
+            <section>
+                <h2>Contacto</h2>
+                <ul class="contact">
+                    <li>
+                        <span class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" />
+                            </svg></span>
+                        639 03 23 34
+                    </li>
+                    <li>
+                        <span class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z" />
+                            </svg></span>
+                        <a href="mailto:abyogrev@gmail.com">abyogrev@gmail.com</a>
+                    </li>
+                    <!-- Portfolio: descomentar y poner la URL cuando esté publicado
+                    <li>
+                        <span class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm6.9 6h-2.9a15.7 15.7 0 0 0-1.4-3.6A8 8 0 0 1 18.9 8zM12 4a14 14 0 0 1 1.9 4h-3.8A14 14 0 0 1 12 4zM4.3 14a8.2 8.2 0 0 1 0-4h3.4a16.5 16.5 0 0 0 0 4zm.8 2H8a15.7 15.7 0 0 0 1.4 3.6A8 8 0 0 1 5.1 16zM8 8H5.1a8 8 0 0 1 4.3-3.6A15.7 15.7 0 0 0 8 8zm4 12a14 14 0 0 1-1.9-4h3.8A14 14 0 0 1 12 20zm2.3-6H9.7a14.7 14.7 0 0 1 0-4h4.6a14.7 14.7 0 0 1 0 4zm.3 5.6A15.7 15.7 0 0 0 16 16h2.9a8 8 0 0 1-4.3 3.6zm1.7-5.6a16.5 16.5 0 0 0 0-4h3.4a8.2 8.2 0 0 1 0 4z" />
+                            </svg></span>
+                        <span class="todo">tuportfolio.com</span>
+                    </li>
+                    -->
+                    <li>
+                        <span class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M20.4 20.4h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.3V9h3.4v1.6h.1a3.7 3.7 0 0 1 3.4-1.9c3.6 0 4.3 2.4 4.3 5.5zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.4H3.5V9h3.6z" />
+                            </svg></span>
+                        <a href="https://www.linkedin.com/in/abraham-rom%C3%A1n-g%C3%B3mez-2b6ab4355/">Abraham Román Gómez</a>
+                    </li>
+                    <li>
+                        <span class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M21 7H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zM9 13H7.5v1.5h-1V13H5v-1h1.5v-1.5h1V12H9zm6.5 1a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm2.5-2a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
+                            </svg></span>
+                        <a href="https://abyogre.itch.io">abyogre.itch.io</a>
+                    </li>
+                    <li>
+                        <span class="ico"><svg viewBox="0 0 24 24">
+                                <path d="M12 2a7 7 0 0 0-7 7c0 5.2 7 13 7 13s7-7.8 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" />
+                            </svg></span>
+                        La Viñuela, Málaga
+                    </li>
+                </ul>
+            </section>
+        </aside>
+
+        <!-- ================= MAIN ================= -->
+        <main class="main">
+            <header>
+                <h1>Abraham Román Gómez</h1>
+                <div class="role"><b>Game Programmer</b> · Unity / C#</div>
+            </header>
+
+            <section>
+                <h2>Experiencia laboral</h2>
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>Júpiter Cartoon Factory</h3>
+                        <span class="date">Mar 2025 – Jun 2025</span>
+                    </div>
+                    <div class="sub">Game Programmer · Prácticas (3 meses)</div>
+                    <div class="highlight">Desarrollo en <b>Godot</b> viniendo de Unity: rápida
+                        <b>capacidad de adaptación</b> a un motor y flujo de trabajo nuevos.</div>
+                    <ul>
+                        <li>Diseño e implementación del loop de juego.</li>
+                        <li>Creación de algoritmos de pathfinding.</li>
+                        <li>Desarrollo del modo multijugador.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section>
+                <h2>Formación</h2>
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>Máster en Diseño y Desarrollo de Videojuegos</h3>
+                        <span class="date">Oct 2025 – Dic 2026</span>
+                    </div>
+                    <div class="sub">Escuela Superior de Videojuegos y Arte Digital de Málaga</div>
+                    <div class="detail"><b>TFM:</b> <i>Sacramento</i>, Action RPG 3D desarrollado en equipo con Velvet
+                        Studios.</div>
+                </div>
+                <div class="entry">
+                    <div class="entry-head">
+                        <h3>Técnico Experto en Creación de Videojuegos</h3>
+                        <span class="date">Sep 2023 – Jun 2025</span>
+                    </div>
+                    <div class="sub">Escuela Superior de Videojuegos y Arte Digital de Málaga</div>
+                    <div class="detail"><b>TFG:</b> <i>Endless Curse</i>, Action RPG con bucle temporal desarrollado en
+                        solitario.</div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Proyectos destacados</h2>
+                <div class="project">
+                    <div class="entry-head">
+                        <h3>Sacramento</h3>
+                        <span class="tag">TFM · Velvet Studios · En desarrollo</span>
+                    </div>
+                    <p>Action RPG 3D souls-like accesible, con cambio de personaje en combate.</p>
+                    <div class="roles"><b>Rol:</b> System, Gameplay y UI/UX Programmer · System y Level Designer</div>
+                </div>
+                <div class="project">
+                    <div class="entry-head">
+                        <h3>Endless Curse</h3>
+                        <span class="tag">TFG · Solo Dev · Terminado</span>
+                    </div>
+                    <p>Action RPG top-down con bucle temporal · ~6 meses de desarrollo.</p>
+                    <div class="roles"><b>Rol:</b> Diseño de juego y narrativa, sistemas, IA de enemigos y UI/UX</div>
+                </div>
+                <div class="project">
+                    <div class="entry-head">
+                        <h3>Nightmar-T</h3>
+                        <span class="tag">Solo Dev · En desarrollo</span>
+                    </div>
+                    <p>Puzles en primera persona con sigilo y humor en un súper post-apocalíptico.</p>
+                    <div class="roles"><b>Rol:</b> Diseño, narrativa, gameplay, IA y UI/UX</div>
+                </div>
+                <div class="more">Más proyectos (<b>Yetilette</b>, <b>Goblin Invasion</b>, <b>Human Revenge</b>…) en el portfolio e itch.io</div>
+            </section>
+
+            <section>
+                <h2>Premios</h2>
+                <ul class="awards">
+                    <li><span class="star">★</span><span><b>Favorito del público</b> · Christmas Jam 2024
+                            (Yetilette)</span></li>
+                    <li><span class="star">★</span><span><b>Mejor proyecto medioambiental</b> · Feria tecnológica UMA 2023</span></li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Información adicional</h2>
+                <ul class="extra">
+                    <li>Gestión, contabilidad y atención al público en <b>Supermercado La Viñuela S.C.</b></li>
+                    
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightmar-T — Abraham Román</title>
+    <meta name="description" content="Nightmar-T: juego de puzles en primera persona con tensión y humor, ambientado en un supermercado de pesadilla. Ficha, jugabilidad, narrativa y galería.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/juego.css">
+    <style>
+        /* "Sello del juego": the two ideas that define Nightmar-T, right under the hero */
+        .seal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 26px;
+        }
+
+        .seal {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            padding: 24px 26px;
+            background:
+                linear-gradient(135deg, rgba(var(--accent-rgb), 0.16) 0%, rgba(var(--accent-rgb), 0.04) 100%),
+                var(--panel);
+        }
+
+        .seal-icon {
+            flex-shrink: 0;
+            width: 52px;
+            height: 52px;
+            display: grid;
+            place-items: center;
+            background: #000;
+            border: 2px solid var(--accent);
+            box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5), 0 0 16px rgba(var(--accent-rgb), 0.35);
+        }
+
+        .seal-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: none;
+            stroke: var(--accent-2);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .seal h3 {
+            margin-bottom: 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.78rem;
+            line-height: 1.5;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .seal p {
+            line-height: 1.7;
+            color: var(--text-dim);
+        }
+
+        /* Full-width, tinted row at the end of the tech sheet */
+        .spec.spec--seal {
+            grid-column: 1 / -1;
+            margin: 10px -30px -10px;
+            padding: 18px 30px;
+            background: rgba(var(--accent-rgb), 0.12);
+            border-bottom: none;
+            border-top: 2px solid var(--accent);
+        }
+
+        .spec--seal dd {
+            font-weight: 600;
+        }
+
+        @media (max-width: 700px) {
+            .spec.spec--seal {
+                margin: 6px -20px -6px;
+                padding: 16px 20px;
+            }
+        }
+
+        /* "Sistema destacado" label inside a slide */
+        .highlight-badge {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 5px 12px;
+            background: rgba(var(--accent-rgb), 0.14);
+            border: 1px solid var(--accent);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        /* PCB functions: small caption under each card */
+        .pcb .stats {
+            margin-top: 10px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent-2);
+        }
+
+        .info-slide .features.pcb-list {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            margin-top: 0;
+        }
+
+        /* The logo is a long, thin wordmark */
+        .game-logo {
+            width: min(680px, 100%);
+        }
+    </style>
+</head>
+
+<!-- Per-game theme: red accents (orange as second colour, like the logo) over near-black red tones -->
+<body style="--accent: #ff4d4d; --accent-2: #ff9a3c; --accent-rgb: 255, 77, 77;
+             --bg: #120606; --shade-rgb: 12, 3, 3; --panel: rgba(32, 10, 10, 0.74);
+             --text: #fbeeee; --text-dim: rgba(251, 238, 238, 0.7);
+             --tag-text: #ffd6d0; --stick-fill: #0e0404;">
+
+    <div class="game-bg" style="background-image: url('Supermercado.png');" aria-hidden="true"></div>
+
+    <nav class="game-topbar">
+        <a class="back-link" href="../index.html#proyectos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Portfolio
+        </a>
+        <div class="topbar-right">
+            <span class="portfolio-mark">Portfolio 2026</span>
+        </div>
+    </nav>
+
+    <main class="game-page">
+
+        <!-- ===== LOGO + TAGS ===== -->
+        <header class="game-hero">
+            <h1><img class="game-logo" src="img/logo.png" alt="Nightmar-T"></h1>
+            <div class="game-tags">
+                <span class="game-tag">Solo Dev</span>
+                <span class="game-tag">Puzles en 1ª persona</span>
+                <span class="game-tag">Tensión y humor</span>
+                <span class="game-tag game-tag--dev">En desarrollo</span>
+            </div>
+            <p class="game-tagline">
+                Te quedas dormido cuadrando precios en la oficina del súper y despiertas en su versión
+                <span class="hl">post-apocalíptica</span>. Armado con una <span class="hl">pistola de códigos de
+                    barras</span> y una IA con demasiada personalidad, toca encontrar 5 baterías y escapar.
+            </p>
+        </header>
+
+        <!-- ===== SELLO DEL JUEGO ===== -->
+        <section class="game-section reveal" aria-labelledby="sealTitle">
+            <h2 class="section-title" id="sealTitle">Sello del juego</h2>
+            <div class="seal-grid">
+                <article class="seal pixel-window">
+                    <div class="seal-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="9" />
+                            <path d="M8 15c1.2 1.3 2.5 2 4 2s2.8-.7 4-2" />
+                            <path d="M8 9.5l2 1M16 9.5l-2 1" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Tensión y humor</h3>
+                        <p>Pasillos a oscuras, un enemigo que te caza por el ruido y puzles contrarreloj… comentados
+                            por <span class="hl">Nightmar-T</span>, una IA que tan pronto te guía como suelta un chiste
+                            en el peor momento. El miedo y la risa se alternan para que la tensión nunca agote.</p>
+                    </div>
+                </article>
+                <article class="seal pixel-window">
+                    <div class="seal-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M4 6v12M7 6v12M10 6v12M14 6v12M16 6v12M20 6v12" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3>Diseñado desde el sector servicios</h3>
+                        <p>Todo el juego nace de mi <span class="hl">experiencia real trabajando de cara al
+                                público</span>: escanear códigos, poner etiquetas de precio, revisar caducidades, hacer
+                            caja y cuadrar precios. Cada mecánica y cada puzle traduce una tarea del día a día de un
+                            supermercado.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ===== MI PAPEL ===== -->
+        <!-- TODO: cambia los títulos por tus roles reales en el proyecto -->
+        <section class="game-section reveal" aria-labelledby="rolesTitle">
+            <h2 class="section-title" id="rolesTitle">Mi papel</h2>
+            <ul class="roles-chain">
+                <li>Game Designer</li>
+                <li>Narrative Designer</li>
+                <li>Gameplay Programmer</li>
+                <li>Level Designer</li>
+                <li>AI Programmer</li>
+                <li>UI/UX Designer</li>
+            </ul>
+        </section>
+
+        <!-- ===== INFO SLIDER =====
+             Each .info-slide is one page of the carousel; its tab is built from data-title.
+             To add a section, add another <div class="info-slide" data-title="..."> -->
+        <section class="game-section info-slider reveal" aria-label="Información del juego">
+            <div class="slider-tabs" role="tablist"></div>
+
+            <div class="slider-row">
+                <button class="stick-btn left" type="button" aria-label="Sección anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="slider-viewport">
+                    <div class="slider-track">
+
+                        <!-- FICHA TÉCNICA -->
+                        <div class="info-slide" data-title="Ficha técnica">
+                            <dl class="spec-list pixel-window">
+                                <div class="spec">
+                                    <dt>Género</dt>
+                                    <dd>Puzles · Sigilo · Terror ligero</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Perspectiva</dt>
+                                    <dd>3D · Primera persona</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Plataforma</dt>
+                                    <dd>PC</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Estado</dt>
+                                    <dd>En desarrollo</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Público objetivo</dt>
+                                    <dd>16 – 30 años · Fans de puzles y ambientación oscura</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Controles</dt>
+                                    <dd>Teclado y ratón · Mando</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Motor</dt>
+                                    <dd>Unity</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Equipo</dt>
+                                    <dd>Solo Dev · Abraham Román</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Duración del desarrollo</dt>
+                                    <dd class="status-dev">Aún en desarrollo</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Referentes</dt>
+                                    <dd>Poppy Playtime · Supermarket Simulator</dd>
+                                </div>
+                                <div class="spec spec--seal">
+                                    <dt>Sello del juego</dt>
+                                    <dd>Tensión y humor · Diseñado desde la experiencia real del autor en el sector
+                                        servicios</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- ESTILO DE JUEGO -->
+                        <div class="info-slide" data-title="Estilo de juego">
+                            <div class="text-block pixel-window">
+                                <p>Un juego de <span class="hl">puzles en primera persona</span> con momentos de
+                                    <span class="hl">tensión y sigilo</span>. La salida está bloqueada y necesita
+                                    <span class="hl">5 baterías</span>: una está al lado del panel, las otras cuatro están
+                                    repartidas por las plantas del edificio.</p>
+                                <p>El game loop: recibir un objetivo, llegar a la zona, reunir la información necesaria y
+                                    resolver el puzle con lógica. Cada puzle superado <span class="hl">desbloquea
+                                        mecánicas</span> y sube la dificultad, hasta combinarlas todas.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Puzles del súper</h3>
+                                    <p>Escanear pantallas en orden, hacer cuentas con los precios de los productos en la
+                                        caja registradora o alimentar mecanismos con baterías y enchufes.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Puzle de baldosas</h3>
+                                    <p>Una caja que se desliza como sobre hielo al escanear la pantalla contraria. Hay que
+                                        pisar cada baldosa una sola vez o el puzle se reinicia.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Sigilo</h3>
+                                    <p>Agacharse hace menos ruido, y el enemigo no ve a través de las estanterías. Si te
+                                        atrapa, vuelves al último punto de guardado.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- PISTOLA PCB -->
+                        <div class="info-slide" data-title="Pistola PCB">
+                            <div class="text-block pixel-window">
+                                <p>La mecánica principal es una <span class="hl">pistola de códigos de barras</span>
+                                    (PCB): la herramienta de cualquier reponedor convertida en arma. Apunta un láser rojo y,
+                                    según a qué apuntes, hace una cosa u otra. Casi todos los puzles giran a su alrededor.
+                                </p>
+                            </div>
+                            <div class="features pcb-list">
+                                <article class="feature pcb pixel-window">
+                                    <h3><span>◆</span>Activar mecanismos</h3>
+                                    <p>Los paneles rojizos del súper abren puertas, activan mecanismos o revelan pistas al
+                                        recibir el láser.</p>
+                                    <p class="stats">Láser · Paneles</p>
+                                </article>
+                                <article class="feature pcb pixel-window">
+                                    <h3><span>◆</span>Aturdir</h3>
+                                    <p>Un láser a la cara del enemigo lo deja quieto un par de segundos: justo lo que
+                                        necesitas para huir.</p>
+                                    <p class="stats">Láser · Punto débil</p>
+                                </article>
+                                <article class="feature pcb pixel-window">
+                                    <h3><span>◆</span>Escanear productos</h3>
+                                    <p>Nombre, precio, descripción y fecha de caducidad en pantalla: datos que luego
+                                        necesitarás para resolver puzles.</p>
+                                    <p class="stats">Código de barras · Inventario</p>
+                                </article>
+                                <article class="feature pcb pixel-window">
+                                    <h3><span>◆</span>Disparar etiquetas</h3>
+                                    <p>Etiquetas de precio que tiran objetos de las estanterías para hacer ruido y
+                                        llevar al enemigo donde quieras. Munición limitada.</p>
+                                    <p class="stats">Distracción · Recargable</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NIGHTMAR-T (sistema destacado) -->
+                        <div class="info-slide" data-title="Nightmar-T">
+                            <div class="text-block pixel-window">
+                                <span class="highlight-badge">Sistema destacado</span>
+                                <p>La PCB trae una pantalla con una <span class="hl">IA integrada</span>, Nightmar-T,
+                                    programada para controlar el supermercado. Funciona como una <span class="hl">interfaz
+                                        diegética</span>: todos los objetivos, pistas y diálogos aparecen en su pantalla,
+                                    dentro del mundo del juego. Es la gran fuente de <span class="hl">humor</span> del
+                                    juego, y también de tensión.</p>
+                                <p>Los diálogos se cargan desde un <span class="hl">Excel integrado con Unity</span>
+                                    (clave · español · inglés), así que se pueden añadir líneas y traducirlas sin tocar el
+                                    motor.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Objetivos y reacciones</h3>
+                                    <p>Anuncia el siguiente objetivo y lo deja fijo en pantalla. Al completarlo, una cara
+                                        sonriente y un sonido te confirman que vas por buen camino.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Pistas</h3>
+                                    <p>Si tardas demasiado en un objetivo, empieza a soltar pistas para orientarte sin
+                                        darte la solución.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Diálogos aleatorios</h3>
+                                    <p>Comentarios que aparecen de vez en cuando para sacarte una sonrisa… o para ponerte
+                                        todavía más nervioso.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- EL SUPERMERCADO -->
+                        <div class="info-slide" data-title="El supermercado">
+                            <div class="text-block pixel-window">
+                                <p>El nivel es un <span class="hl">supermercado de varias plantas</span>, diseñado como lo
+                                    vería alguien que ha trabajado en uno: cajas, estanterías, almacén y oficina. Cada
+                                    planta esconde una batería, y el camino obliga a <span class="hl">volver sobre tus
+                                        pasos</span> cuando el enemigo ya patrulla por ellas.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Planta baja y bazar</h3>
+                                    <p>La planta más grande enseña las mecánicas con puzles de caja, pantallas y la primera
+                                        batería. Después, el bazar exige memoria y rapidez.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>El sótano</h3>
+                                    <p>Una sala pequeña donde se presenta al enemigo: una especie de zombi casi ciego que
+                                        se guía por el ruido y corre más que tú.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>La azotea</h3>
+                                    <p>El puzle más difícil: escanear pantallas en orden y contrarreloj mientras el
+                                        enemigo patrulla a tu alrededor.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NARRATIVA -->
+                        <div class="info-slide" data-title="Narrativa">
+                            <div class="text-block pixel-window">
+                                <p>El protagonista es el dueño de un supermercado que además estudia un máster. Tras un
+                                    fin de semana de <span class="hl">horas extra</span>, se queda dormido de madrugada en
+                                    su escritorio mientras actualiza precios.</p>
+                                <p>Despierta en la misma mesa, pero en una versión <span class="hl">post-apocalíptica</span>
+                                    del súper. Con la PCB y la ayuda de Nightmar-T tendrá que reunir las baterías y salir
+                                    por la puerta principal… sin saber hasta el final que todo era una
+                                    <span class="hl">pesadilla</span>.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Sección siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== GALERÍA =====
+             Para añadir fotos, gifs o vídeos, añade otro <li> a la lista .gallery-thumbs:
+             <li><button data-src="img/archivo.gif" data-caption="Texto que aparece abajo"></button></li> -->
+        <section class="game-section gallery reveal" aria-labelledby="galleryTitle">
+            <h2 class="section-title" id="galleryTitle">Galería</h2>
+
+            <div class="gallery-stage-row">
+                <button class="stick-btn left" type="button" aria-label="Anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="gallery-stage pixel-window">
+                    <div class="gallery-hud">
+                        <span class="gallery-caption"></span>
+                        <span class="gallery-counter"></span>
+                        <button class="gallery-toggle" type="button"></button>
+                    </div>
+                    <div class="gallery-progress"></div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="gallery-thumbs">
+                <li><button type="button" data-src="Nightmar-T_Gameplay.mp4" data-caption="Gameplay"></button></li>
+                <li><button type="button" data-src="Titulo.png" data-caption="Menú principal"></button></li>
+                <li><button type="button" data-src="Inicio.png" data-caption="«¡Hola humano! Me presento, me llamo Nightmar-T.»"></button></li>
+                <li><button type="button" data-src="Salida.png" data-caption="La salida principal, bloqueada"></button></li>
+                <li><button type="button" data-src="Supermercado.png" data-caption="Puzle: escanear las pantallas en orden"></button></li>
+            </ul>
+        </section>
+
+        <footer class="game-footer">
+            <a class="back-link" href="../index.html#proyectos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6" />
+                </svg>
+                Volver a Mis Proyectos
+            </a>
+        </footer>
+    </main>
+
+    <script src="../js/juego.js"></script>
+</body>
+
+</html>

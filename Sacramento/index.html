@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sacramento — Abraham Román</title>
+    <meta name="description" content="Sacramento: Action RPG 3D en tercera persona. Ficha, jugabilidad, narrativa y galería.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/juego.css">
+</head>
+
+<!-- Per-game theme: accent colours (background image goes on .game-bg below) -->
+<body style="--accent: #ff5fc8; --accent-2: #b44dff; --accent-rgb: 255, 95, 200;">
+
+    <div class="game-bg" style="background-image: url('img/fondo.png');" aria-hidden="true"></div>
+
+    <nav class="game-topbar">
+        <a class="back-link" href="../index.html#proyectos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Portfolio
+        </a>
+        <span class="portfolio-mark">Portfolio 2026</span>
+    </nav>
+
+    <main class="game-page">
+
+        <!-- ===== LOGO + TAGS ===== -->
+        <header class="game-hero">
+            <h1><img class="game-logo" src="SACRAMENTO_TEXT.png" alt="Sacramento"></h1>
+            <div class="game-tags">
+                <span class="game-tag">TFM / Velvet Studios</span>
+                <span class="game-tag">Action RPG</span>
+                <span class="game-tag game-tag--dev">En desarrollo</span>
+            </div>
+            <p class="game-tagline">
+                Has sido elegido como <span class="hl">tributo</span> para la Vápula. Sobrevive a unas tierras
+                devastadas por la corrupción y convierte esa misma energía oscura en tu
+                <span class="hl">mejor arma</span>.
+            </p>
+        </header>
+
+        <!-- ===== MI PAPEL ===== -->
+        <!-- TODO: cambia los títulos y descripciones por tus roles reales en el proyecto -->
+        <section class="game-section reveal" aria-labelledby="rolesTitle">
+            <h2 class="section-title" id="rolesTitle">Mi papel</h2>
+            <ul class="roles-chain">
+                <li>UI/UX Designer</li>
+                <li>System Programmer</li>
+                <li>System Designer</li>
+                <li>Gameplay Programmer</li>
+                <li>Level Designer</li>
+                <li>UI/UX Programmer</li>
+            </ul>
+        </section>
+
+        <!-- ===== INFO SLIDER =====
+             Each .info-slide is one page of the carousel; its tab is built from data-title.
+             To add a section, add another <div class="info-slide" data-title="..."> -->
+        <section class="game-section info-slider reveal" aria-label="Información del juego">
+            <div class="slider-tabs" role="tablist"></div>
+
+            <div class="slider-row">
+                <button class="stick-btn left" type="button" aria-label="Sección anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="slider-viewport">
+                    <div class="slider-track">
+
+                        <!-- FICHA TÉCNICA -->
+                        <div class="info-slide" data-title="Ficha técnica">
+                            <dl class="spec-list pixel-window">
+                                <div class="spec">
+                                    <dt>Género</dt>
+                                    <dd>Action RPG</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Perspectiva</dt>
+                                    <dd>3D · Tercera persona</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Proyecto</dt>
+                                    <dd>Trabajo Fin de Máster · Velvet Studios</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Estado</dt>
+                                    <dd>En desarrollo · Demo</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Público objetivo</dt>
+                                    <dd>15 – 30 años</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Controles</dt>
+                                    <dd>Teclado y ratón · Mando</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Motor</dt>
+                                    <dd>Unity</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Equipo</dt>
+                                    <dd>Velvet Studios</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Duración del desarrollo</dt>
+                                    <dd class="status-dev">Aún en desarrollo</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Referentes</dt>
+                                    <dd>Dark Souls · Lies of P · Genshin Impact</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- ESTILO DE JUEGO -->
+                        <div class="info-slide" data-title="Estilo de juego">
+                            <div class="text-block pixel-window">
+                                <p>Un combate <span class="hl">fluido y exigente, pero gentil</span> con el jugador.
+                                    Parte del clásico <span class="hl">"hit &amp; roll"</span> de los souls-like y lo
+                                    acerca a nuevos jugadores con habilidades únicas, objetos de apoyo y cambio de
+                                    personaje en mitad de la pelea.</p>
+                                <p>Cada zona alterna dos momentos: la <span class="hl">exploración</span>, para
+                                    encontrar equipo, subir de nivel y preparar la build, y la
+                                    <span class="hl">batalla contra el jefe</span>, que abre el camino a la siguiente
+                                    zona.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Sistema de Vápula</h3>
+                                    <p>Cada golpe te llena de corrupción. Úsala para potenciar tus ataques, pero si la
+                                        barra se llena tus estadísticas caen al 30%.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Party y cambio de personaje</h3>
+                                    <p>Personajes jugables con armas y habilidades únicas. Cambia entre ellos para
+                                        repartir la Vápula y adaptarte a cada situación.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Builds y rosarios</h3>
+                                    <p>Armas, armaduras, atributos y rosarios que alteran la barra de Vápula para crear
+                                        tu propio estilo de juego.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NARRATIVA -->
+                        <div class="info-slide" data-title="Narrativa">
+                            <div class="text-block pixel-window">
+                                <p>En un mundo dominado por la guerra, <span class="hl">cuatro reinos vecinos</span>
+                                    se enfrentan sin descanso en sus fronteras. Cuando una energía oscura, la
+                                    <span class="hl">Vápula</span>, emerge de la nada, los reinos se unen para hacerle
+                                    frente… sin éxito.</p>
+                                <p>Su única salida es ofrecerle <span class="hl">sacrificios</span> para frenar su
+                                    expansión. Este año, el elegido en la siega es un chico como otro cualquiera. Tras
+                                    la ceremonia despierta en un bosque tenebroso con una misión:
+                                    <span class="hl">sobrevivir</span> y descubrir los secretos que esconden las
+                                    tierras devastadas, junto a los aliados que encontrará por el camino.</p>
+                            </div>
+                        </div>
+
+                        <!-- DIRECCIÓN ARTÍSTICA -->
+                        <div class="info-slide" data-title="Dirección artística">
+                            <div class="text-block pixel-window">
+                                <p>Inspirada en la <span class="hl">cultura tradicional española</span> y en la
+                                    <span class="hl">fantasía medieval oscura</span>. El 2D mezcla el
+                                    <span class="hl">Art Nouveau</span> con una base anime y colores muy saturados; el
+                                    3D busca un acabado anime cercano a Genshin Impact, con texturas pintadas a mano.
+                                </p>
+                                <p>Zarzas blancas con púas negras, tonos rojizos donde domina la Vápula y escenarios
+                                    marcados por la tragedia.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Sección siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== GALERÍA =====
+             Para añadir fotos, gifs o vídeos, añade otro <li> a la lista .gallery-thumbs:
+             <li><button data-src="img/archivo.gif" data-caption="Texto que aparece abajo"></button></li> -->
+        <section class="game-section gallery reveal" aria-labelledby="galleryTitle">
+            <h2 class="section-title" id="galleryTitle">Galería</h2>
+
+            <div class="gallery-stage-row">
+                <button class="stick-btn left" type="button" aria-label="Anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="gallery-stage pixel-window">
+                    <div class="gallery-hud">
+                        <span class="gallery-caption"></span>
+                        <span class="gallery-counter"></span>
+                        <button class="gallery-toggle" type="button"></button>
+                    </div>
+                    <div class="gallery-progress"></div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="gallery-thumbs">
+                <li><button type="button" data-src="Sacramento-Showcase.mp4" data-caption="Showcase"></button></li>
+                <li><button type="button" data-src="img/key-art.png" data-caption="Key art"></button></li>
+            </ul>
+        </section>
+
+        <footer class="game-footer">
+            <a class="back-link" href="../index.html#proyectos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6" />
+                </svg>
+                Volver a Mis Proyectos
+            </a>
+        </footer>
+    </main>
+
+    <script src="../js/juego.js"></script>
+</body>
+
+</html>

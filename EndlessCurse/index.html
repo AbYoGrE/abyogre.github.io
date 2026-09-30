@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endless Curse — Abraham Román</title>
+    <meta name="description" content="Endless Curse: Action RPG 3D low poly con un bucle temporal de 12:00 a 20:00. Ficha, jugabilidad, narrativa y galería.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700&family=Chakra+Petch:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../css/juego.css">
+    <style>
+        /* The logo is square: keep it smaller than the wide logos of the other games */
+        .game-logo {
+            width: min(380px, 80%);
+        }
+
+        /* "Programación destacada" label inside the time loop slide */
+        .highlight-badge {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 5px 12px;
+            background: rgba(var(--accent-rgb), 0.14);
+            border: 1px solid var(--accent);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.6rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        /* Equipment cards: which mechanic each piece unlocks */
+        .gear .stats {
+            margin-top: 10px;
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .info-slide .features.gear-list {
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            margin-top: 0;
+        }
+    </style>
+</head>
+
+<!-- Per-game theme: blue (a bit darker than Yetilette's cyan) over deep navy tones (background image goes on .game-bg below) -->
+<body style="--accent: #3aa6ff; --accent-2: #1f6bff; --accent-rgb: 58, 166, 255;
+             --bg: #060b18; --shade-rgb: 4, 8, 18; --panel: rgba(10, 20, 42, 0.74);
+             --text: #eaf2ff; --text-dim: rgba(234, 242, 255, 0.7);
+             --tag-text: #cfe6ff; --stick-fill: #050a16;">
+
+    <div class="game-bg" style="background-image: url('Mazmorra.png');" aria-hidden="true"></div>
+
+    <nav class="game-topbar">
+        <a class="back-link" href="../index.html#proyectos">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                stroke-linejoin="round" aria-hidden="true">
+                <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Portfolio
+        </a>
+        <div class="topbar-right">
+            <!-- Direct .zip download from the public builds repo's release (tag endless-curse-v1.0.0) -->
+            <a class="download-btn"
+                href="https://github.com/AbYoGrE/Abyogre-Game-Builds/releases/download/endless-curse-v1.0.0/EndlessCurse.zip">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3V3zM4 18h16v2H4z" />
+                </svg>
+                Descargar juego
+            </a>
+            <span class="portfolio-mark">Portfolio 2026</span>
+        </div>
+    </nav>
+
+    <main class="game-page">
+
+        <!-- ===== LOGO + TAGS ===== -->
+        <header class="game-hero">
+            <h1><img class="game-logo" src="img/logo.png" alt="Endless Curse"></h1>
+            <div class="game-tags">
+                <span class="game-tag">TFG / Solo Dev</span>
+                <span class="game-tag">Action RPG</span>
+                <span class="game-tag">Bucle temporal</span>
+            </div>
+            <p class="game-tagline">
+                Una maldición te matará al llegar las <span class="hl">20:00</span>. Tu única salida: volver una y otra
+                vez a las <span class="hl">12:00</span> del mismo día y usar ese bucle para romperla… o convertirte en
+                un <span class="hl">dios del tiempo</span>.
+            </p>
+        </header>
+
+        <!-- ===== MI PAPEL ===== -->
+        <!-- TODO: cambia los títulos por tus roles reales en el proyecto -->
+        <section class="game-section reveal" aria-labelledby="rolesTitle">
+            <h2 class="section-title" id="rolesTitle">Mi papel</h2>
+            <ul class="roles-chain">
+                <li>Game Designer</li>
+                <li>Narrative Designer</li>
+                <li>Gameplay Programmer</li>
+                <li>System Designer</li>
+                <li>Level Designer</li>
+                <li>AI Programmer</li>
+                <li>UI/UX Designer</li>
+            </ul>
+        </section>
+
+        <!-- ===== INFO SLIDER =====
+             Each .info-slide is one page of the carousel; its tab is built from data-title.
+             To add a section, add another <div class="info-slide" data-title="..."> -->
+        <section class="game-section info-slider reveal" aria-label="Información del juego">
+            <div class="slider-tabs" role="tablist"></div>
+
+            <div class="slider-row">
+                <button class="stick-btn left" type="button" aria-label="Sección anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="slider-viewport">
+                    <div class="slider-track">
+
+                        <!-- FICHA TÉCNICA -->
+                        <div class="info-slide" data-title="Ficha técnica">
+                            <dl class="spec-list pixel-window">
+                                <div class="spec">
+                                    <dt>Género</dt>
+                                    <dd>Action RPG · Puzles de tiempo</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Perspectiva</dt>
+                                    <dd>3D Low Poly · Vista Top-Down</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Plataforma</dt>
+                                    <dd>PC · Consola (planificado)</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Estado</dt>
+                                    <dd>Terminado</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Público objetivo</dt>
+                                    <dd>+16 años · Temas como la muerte, el abandono o la depresión</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Controles</dt>
+                                    <dd>Teclado y ratón</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Motor</dt>
+                                    <dd>Unity</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Equipo</dt>
+                                    <dd>TFG · Solo Dev · Abraham Román</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Duración del desarrollo</dt>
+                                    <dd>6 meses aprox.</dd>
+                                </div>
+                                <div class="spec">
+                                    <dt>Mecánica diferenciadora</dt>
+                                    <dd>Retroceder en el tiempo (bucle de 12:00 a 20:00)</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <!-- ESTILO DE JUEGO -->
+                        <div class="info-slide" data-title="Estilo de juego">
+                            <div class="text-block pixel-window">
+                                <p>Un <span class="hl">RPG de acción</span> en tiempo real con cámara
+                                    <span class="hl">top-down</span> y movimiento libre en todas direcciones. Exploras un
+                                    <span class="hl">poblado</span> sin enemigos lleno de pistas y una
+                                    <span class="hl">mazmorra</span>: las ruinas del antiguo castillo del reino.</p>
+                                <p>El core loop: explora la mazmorra, choca con un bloqueo, vuelve al poblado a
+                                    preguntar a los NPCs, retrocede en el tiempo si hace falta y consigue la
+                                    <span class="hl">pieza de equipamiento</span> que te deja avanzar.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Ataque y salto</h3>
+                                    <p>El ataque daña a los enemigos en un área frontal y también activa palancas y
+                                        mecanismos. El salto da acceso a plataformas y zonas elevadas.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Nigromancia</h3>
+                                    <p>Al llegar al primer altar puedes invocar un no-muerto aliado que carga contra el
+                                        enemigo más cercano. Cada altar sube su nivel y desbloquea nuevos tipos.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Enemigos</h3>
+                                    <p>Cuerpo a cuerpo que te persiguen, magos que mantienen la distancia y voladores
+                                        que solo son vulnerables al lanzarse en picado. Niveles del 1 al 5.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- BUCLE TEMPORAL (sistema destacado) -->
+                        <div class="info-slide" data-title="Bucle temporal">
+                            <div class="text-block pixel-window">
+                                <span class="highlight-badge">Sistema destacado</span>
+                                <p>Solo tienes de las <span class="hl">12:00 a las 20:00</span> para avanzar: si llega la
+                                    hora, la maldición te mata. Con el artefacto puedes <span class="hl">retroceder</span>
+                                    a las 12:00 cuando quieras, volviendo al punto de inicio pero
+                                    <span class="hl">conservando</span> todo tu progreso, equipo y conocimiento.</p>
+                                <p>El tiempo es a la vez tu enemigo y tu herramienta: hay salas que solo se resuelven a
+                                    una <span class="hl">hora concreta</span>, y NPCs que solo te ayudan si los encuentras
+                                    en el momento justo.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Poblado vivo</h3>
+                                    <p>15 NPCs con su propia rutina: se desplazan en tiempo real entre sus eventos y se
+                                        reinician con cada bucle. Todos se dan pistas unos de otros.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Diario y bancos</h3>
+                                    <p>Cada evento descubierto se apunta en el diario. En los bancos puedes esperar y
+                                        saltar directamente a una hora entre las 13:00 y las 19:00.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Puzles de tiempo</h3>
+                                    <p>Una pared que cae a las 18:00, el agua que baja, un gólem que despierta o una
+                                        sombra que señala un botón: cada puzle depende de la hora del día.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- EQUIPAMIENTO -->
+                        <div class="info-slide" data-title="Equipamiento">
+                            <div class="features gear-list">
+                                <article class="feature gear pixel-window">
+                                    <h3><span>◆</span>Aerotúnica</h3>
+                                    <p>Te vuelve mucho más ligero. Imprescindible para vencer a la cinta que te empuja
+                                        en el camino turquesa.</p>
+                                    <p class="stats">Velocidad + · Alcaldesa</p>
+                                </article>
+                                <article class="feature gear pixel-window">
+                                    <h3><span>◆</span>Superbotas</h3>
+                                    <p>Un gran impulso que te hace saltar más alto para alcanzar llaves y plataformas
+                                        del camino púrpura.</p>
+                                    <p class="stats">Salto + · Niño</p>
+                                </article>
+                                <article class="feature gear pixel-window">
+                                    <h3><span>◆</span>Colgante canalizador</h3>
+                                    <p>Absorbe energía y la libera en un dash que ignora la gravedad unas décimas: justo
+                                        lo que necesitas para cruzar precipicios.</p>
+                                    <p class="stats">Dash · Criada</p>
+                                </article>
+                                <article class="feature gear pixel-window">
+                                    <h3><span>◆</span>Guantes psíquicos</h3>
+                                    <p>Concentran la energía en un escudo frontal que bloquea ataques y resiste la
+                                        ventisca del camino verde.</p>
+                                    <p class="stats">Escudo · Anciano</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- LA MAZMORRA -->
+                        <div class="info-slide" data-title="La mazmorra">
+                            <div class="text-block pixel-window">
+                                <p>Las ruinas del antiguo castillo esconden <span class="hl">4 altares</span>. Desde el
+                                    vestíbulo principal se abren <span class="hl">4 caminos</span> que puedes hacer en
+                                    cualquier orden, cada uno con enemigos de distinta dificultad, un bloqueo que exige una
+                                    pieza de equipamiento y un <span class="hl">puzle de tiempo</span>.</p>
+                                <p>Balizas de teletransporte y rocas que se rompen como atajos evitan repetir recorridos
+                                    tras cada bucle. Con los 4 altares se abre la <span class="hl">sala del trono</span> a
+                                    las 19:00.</p>
+                            </div>
+
+                            <div class="features">
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Altares</h3>
+                                    <p>Cada altar aumenta tu asimilación de la maldición: más estadísticas y una
+                                        invocación más poderosa.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Boss final</h3>
+                                    <p>Un combate en 4 fases contra ti mismo: duelo, trampas del escenario, invocaciones
+                                        y bloqueo de tus propias mecánicas.</p>
+                                </article>
+                                <article class="feature pixel-window">
+                                    <h3><span>◆</span>Power-ups</h3>
+                                    <p>Los enemigos pueden soltar potenciadores temporales que duplican tu ataque o tu
+                                        defensa durante unos segundos.</p>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- NARRATIVA -->
+                        <div class="info-slide" data-title="Narrativa">
+                            <div class="text-block pixel-window">
+                                <p>Un joven marginado encuentra un <span class="hl">artefacto</span> capaz de manipular el
+                                    tiempo y empieza a usarlo en su propio beneficio. Pero un día, a las 20:00, su dueño
+                                    aparece y lo castiga con una <span class="hl">maldición</span>: ahora solo puede volver a
+                                    las 12:00, y si llegan las 20:00, morirá.</p>
+                                <p>Una <span class="hl">voz misteriosa</span> promete ayudarle a romperla superando las
+                                    ruinas del castillo… hasta que en la sala del trono descubre que esa voz es
+                                    <span class="hl">él mismo, del futuro</span>, atrapado en una paradoja que convierte a
+                                    cada versión en un dios del tiempo. Al final, la decisión es tuya: continuar el ciclo
+                                    o <span class="hl">romper el artefacto</span>.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Sección siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+        </section>
+
+        <!-- ===== GALERÍA =====
+             Para añadir fotos, gifs o vídeos, añade otro <li> a la lista .gallery-thumbs:
+             <li><button data-src="img/archivo.gif" data-caption="Texto que aparece abajo"></button></li> -->
+        <section class="game-section gallery reveal" aria-labelledby="galleryTitle">
+            <h2 class="section-title" id="galleryTitle">Galería</h2>
+
+            <div class="gallery-stage-row">
+                <button class="stick-btn left" type="button" aria-label="Anterior">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+
+                <div class="gallery-stage pixel-window">
+                    <div class="gallery-hud">
+                        <span class="gallery-caption"></span>
+                        <span class="gallery-counter"></span>
+                        <button class="gallery-toggle" type="button"></button>
+                    </div>
+                    <div class="gallery-progress"></div>
+                </div>
+
+                <button class="stick-btn right" type="button" aria-label="Siguiente">
+                    <svg viewBox="0 0 84 64" aria-hidden="true">
+                        <path class="stick-arrow" d="M2 32 13 23v18z" />
+                        <circle class="stick-base" cx="52" cy="32" r="28" />
+                        <g class="stick-cap">
+                            <circle cx="48" cy="32" r="16" />
+                            <circle cx="48" cy="32" r="9" />
+                        </g>
+                    </svg>
+                </button>
+            </div>
+
+            <ul class="gallery-thumbs">
+                <li><button type="button" data-src="EndlessCurse_Gameplay.mp4" data-caption="Gameplay"></button></li>
+                <li><button type="button" data-src="Poblado.png" data-caption="El poblado"></button></li>
+                <li><button type="button" data-src="Mazmorra.png" data-caption="La mazmorra"></button></li>
+                <li><button type="button" data-src="Agua.png" data-caption="Puzle de tiempo: la sala del agua"></button></li>
+                <li><button type="button" data-src="Inventario.png" data-caption="Inventario y equipamiento"></button></li>
+            </ul>
+        </section>
+
+        <footer class="game-footer">
+            <a class="back-link" href="../index.html#proyectos">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" aria-hidden="true">
+                    <path d="M19 12H5M11 6l-6 6 6 6" />
+                </svg>
+                Volver a Mis Proyectos
+            </a>
+        </footer>
+    </main>
+
+    <script src="../js/juego.js"></script>
+</body>
+
+</html>
